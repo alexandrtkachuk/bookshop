@@ -2,6 +2,8 @@
 include ('config.php');
 include (LIBS.'/functions.php');
 
+
+
 try
 {
   $obj = new Controller();

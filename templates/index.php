@@ -1,18 +1,18 @@
-<?php
-include ('config.php');
-include (LIBS.'/functions.php');
+<html>
+<head>
+    <title>%TITLE%</title>
+    <style>
+    .content 
+    {
+        margin: 0 auto;
+        width: 600px;
+    }
+    </style>
+</head>
+<body>
 
-try
-{
-  $obj = new Controller();
-}
-catch(Exception $e)
-{
-  echo $e->getMessage();	           
-}
-
-
-
-
+    
 
 
+</body>
+</html>
