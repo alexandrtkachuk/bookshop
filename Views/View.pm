@@ -10,11 +10,14 @@ use Data::Dumper;
 use Models::Utilits::UseClass;
 $|=1;
 
-my $date = Models::Utilits::Date->new();
+#my $date = Models::Utilits::Date->new();
 sub new
 {
     my $class = ref($_[0])||$_[0];
-    return bless({'pallett'=>undef },$class);
+    return bless({
+            'pallett'=>undef ,
+            'data' => Models::Utilits::Date->new()
+        },$class);
 }
 
 
@@ -22,14 +25,14 @@ sub go()
 {
     my ($self,$tdir)=@_;
     #print "Content-type: text/html; encoding='utf-8'\n\n";
-    my $templete=$tdir.'Resources/html/'.$date->{'nextpage'}.'.html';
+    my $templete=$tdir.'Resources/html/'.$self->{'data'}->{'nextpage'}.'.html';
     #print $templete;
     my $html=$self->loadTemplate($templete);
 
     if($html)
     {
         $self->{'pallett'}=Models::Utilits::UseClass->_getCls('Views/Palletts/',
-            $date->{'nextpage'}
+            $self->{'data'}->{'nextpage'}
             ,undef );
         
         $html=$self->ReplaceF($html);
@@ -39,7 +42,7 @@ sub go()
     }
     else
     {   
-        $date->{'nextpage'}='Error';
+        $self->{'data'}->{'nextpage'}='Error';
         #$self->go($tdir);
         #print "no file";
     }
@@ -89,11 +92,5 @@ sub ReplaceF
     return $text;
 
 }
-
-
-
-
-
-
 
 1;

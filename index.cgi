@@ -30,7 +30,7 @@ sub main
 
 
     my $date = Models::Utilits::Date->new();
-
+    # это нужно перенсти во вюху
     my $cgi = CGI->new;
     my $session =  Models::Utilits::Sessionme->new($cgi);
 
@@ -64,8 +64,10 @@ sub main
     my $debug = Models::Utilits::Debug->new();
     my $d=$debug->getMsg();
     print  Dumper(\$d);
-
-print $date->{'nextpage'};
+    
+     
+    
+    print $date->{'nextpage'};
 
 }
 

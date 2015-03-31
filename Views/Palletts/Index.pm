@@ -6,6 +6,7 @@ use Data::Dumper;
 use Models::Utilits::Date;
 use Models::Interfaces::Sql;
 use Config::Config;
+use Views::View;
 
 
 sub new
@@ -49,6 +50,22 @@ sub loginuser
 
 sub AUTOLOAD
 {
+    return '';
+
+}
+
+
+sub getHeader
+{
+    #my $view = Views::View->new();
+    #my $temp = $date->{'nextpage'};
+    #$date->{'nextpage'}='Header';
+    
+    # my $t=  Config::Config->getDir(); 
+    #$view->go($t.'/');
+
+
+    #$date->{'nextpage'}=$temp;
     return '';
 
 }
