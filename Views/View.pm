@@ -8,6 +8,7 @@ use Models::Utilits::Debug;
 use Models::Utilits::File;
 use Data::Dumper;
 use Models::Utilits::UseClass;
+use Config::Config;
 $|=1;
 
 #my $date = Models::Utilits::Date->new();
@@ -25,9 +26,9 @@ sub go()
 {
     my ($self,$tdir)=@_;
     #print "Content-type: text/html; encoding='utf-8'\n\n";
-    my $templete=$tdir.'Resources/html/'.$self->{'data'}->{'nextpage'}.'.html';
+    #my $templete=$tdir.'Resources/html/'.$self->{'data'}->{'nextpage'}.'.html';
     #print $templete;
-    my $html=$self->loadTemplate($templete);
+    my $html=$self->loadTemplate( $self->{'data'}->{'nextpage'} );
 
     if($html)
     {
@@ -51,8 +52,11 @@ sub go()
 sub loadTemplate
 {
     my($self,$filename)=@_;
+    my $tdir = Config::Config->getDir();
+    my $fullpath= $tdir.'/Resources/html/'.$filename.'.html';
+    #print $fullpath; 
     my $file = Models::Utilits::File->new();
-    my $html = $file->getFile($filename); 
+    my $html = $file->getFile($fullpath); 
     return $html;
 
 
@@ -72,7 +76,10 @@ sub ReplaceH
 
 
     $text=~s/%%(\w+)%%/$self->{'pallett'}->{$1}/ge;
-
+    
+    #для поодержки вложеностей 
+    $text=~s/%%(\w+)%%/$self->{'pallett'}->{$1}/ge;
+    
     return $text;
 
 }

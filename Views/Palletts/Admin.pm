@@ -17,6 +17,8 @@ sub createHash
 
     my ($self)=@_;
     $self->{'title'}='Админка';
+    $self->{'getHeader'}=$self->loadTemplate('Header');
+    $self->{'getFooter'}=$self->loadTemplate('Footer');
 }
 
 

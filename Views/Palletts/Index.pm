@@ -55,18 +55,12 @@ sub AUTOLOAD
 }
 
 
-sub getHeader
+sub loadTemplate
 {
-    #my $view = Views::View->new();
-    #my $temp = $date->{'nextpage'};
-    #$date->{'nextpage'}='Header';
-    
-    # my $t=  Config::Config->getDir(); 
-    #$view->go($t.'/');
-
-
-    #$date->{'nextpage'}=$temp;
-    return '';
+    my($selfi,$filename)=@_;
+    my $text = Views::View->loadTemplate($filename);
+   
+    return $text;
 
 }
 
