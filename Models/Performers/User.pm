@@ -10,11 +10,14 @@ use Data::Dumper;
 use Models::Utilits::Date;
 use Models::Interfaces::Sql;
 use Config::Config;
-
+use Digest::MD5 qw(md5 md5_hex md5_base64) ;
 use Models::Utilits::Sessionme;
 my $session =  Models::Utilits::Sessionme->new();
 
 my $debug = Models::Utilits::Debug->new();
+
+
+#$debug->setMsg(md5('test'));
 
 
 my $self;
@@ -44,11 +47,25 @@ sub new
 
 }
 
+#add user
 sub add
 {
 
     my ($self,$name,$pass,$email)=@_;
     
+
+
+
+
+    $debug->setMsg("add user: name: $name \n
+        pass: $pass \n emai: $email ");
+    
+    my %hash=('key1'=>2, 'key2'=>'te st');
+    
+    $self->{'sql'}->insert(\%hash);
+
+
+    return 1;
 
 }
 

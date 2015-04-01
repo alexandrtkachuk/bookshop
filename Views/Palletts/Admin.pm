@@ -11,6 +11,7 @@ our @ISA = qw(Views::Palletts::Index);
 require Views::Palletts::Index;
 
 
+
 sub createHash
 {
     my $date = Models::Utilits::Date->new();
@@ -19,6 +20,7 @@ sub createHash
     $self->{'title'}='Админка';
     $self->{'getHeader'}=$self->loadTemplate('Header');
     $self->{'getFooter'}=$self->loadTemplate('Footer');
+    $self->{'getLogin'}=$self->loadTemplate('Login');
 }
 
 

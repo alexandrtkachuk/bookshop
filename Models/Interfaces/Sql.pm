@@ -4,7 +4,7 @@ package Models::Interfaces::Sql;
 use warnings;
 use strict;
 use DBI; 
-#use Data::Dumper;
+use Data::Dumper;
 
 
 
@@ -26,7 +26,10 @@ sub new
     $pass=$_[4];
 
     my $class = ref($_[0])||$_[0];
-    return bless({      },$class);
+    return bless(
+        {
+            'sql'=>undef
+        },$class);
 
 }
 
@@ -59,9 +62,9 @@ sub connect
 
 sub select
 {
-    return 0 unless($dbh);
-    my($self,$str) = @_;
-    return $sth = $dbh->prepare($str);
+    # return 0 unless($dbh);
+    #my($self,$str) = @_;
+    #return $sth = $dbh->prepare($str);
     #    or die $dbh->errstr;
     #return 1;
     
@@ -69,17 +72,57 @@ sub select
 }
 
 
+sub insert
+{
+
+    return 0 unless($dbh);
+    my($self,$hash) = @_;
+    
+
+    #print Dumper $hash;
+    #my %t=%$hash;
+    foreach my  $k (keys %$hash)
+    {
+        print   $$hash{$k}."=".ref(\$$hash{$k})."\n";
+    }
+    return 1;
+    
+}
+
+
+
 sub setQuery
 {   
     return 0 unless($dbh);
     my($self,$str) = @_;
     return 0  unless($str);
-    return $sth = $dbh->prepare($str);
-
+    $self->{'sql'}=$str;
+    return 1;
+    
+    
 }
+
+
+
+
 
 sub execute
 {   
+
+    my($self) = @_;
+    unless($self->{'sql'})
+    {
+        return 0;
+    }
+    
+    $self->{'sql'}= $dbh->quote( $self->{'sql'});
+
+
+    unless($sth = $dbh->prepare($self->{'sql'} ))
+    {
+        return 0;
+    }
+
     return 0 unless($sth);
     return $sth->execute();
 }

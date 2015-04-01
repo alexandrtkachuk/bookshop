@@ -61,13 +61,10 @@ sub main
 
 
     ##debug info
-    my $debug = Models::Utilits::Debug->new();
-    my $d=$debug->getMsg();
-    print  Dumper(\$d);
-    
-     
-    
-    print $date->{'nextpage'};
+    #my $debug = Models::Utilits::Debug->new();
+    #my $d=$debug->getMsg();
+    #print  Dumper(\$d);
+    #print $date->{'nextpage'};
 
 }
 

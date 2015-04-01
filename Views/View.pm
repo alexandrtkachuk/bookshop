@@ -36,8 +36,9 @@ sub go()
             $self->{'data'}->{'nextpage'}
             ,undef );
         
-        $html=$self->ReplaceF($html);
+        
         $html=$self->ReplaceH($html);
+        $html=$self->ReplaceF($html);
         
         print $html; 
     }
