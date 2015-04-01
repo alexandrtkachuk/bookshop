@@ -1,0 +1,8 @@
+RewriteEngine On
+Options +FollowSymlinks
+#RewriteBase /perl2/perl/olx/
+RewriteBase  /~user7/bookshop/
+DirectoryIndex index.cgi
+
+RewriteRule !\.(js|jpeg|css)$ index.cgi [L]
+#RewriteRule ^(.*)$ index.cgi [L]
