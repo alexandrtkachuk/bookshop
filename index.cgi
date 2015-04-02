@@ -16,10 +16,11 @@ use Models::Utilits::Date;
 use Models::Utilits::Debug;
 use Views::View;
 use Config::Config;
-use CGI qw(:cgi-lib :escapeHTML :unescapeHTML);
-#use CGI::Carp qw(fatalsToBrowser); # позволит выводить ошибки в браузер
-use Models::Utilits::Sessionme;
+
 Config::Config->setDir(TDIR);
+
+
+
 
 my $debug = Models::Utilits::Debug->new();
 
@@ -30,13 +31,7 @@ sub main
 
 
     my $date = Models::Utilits::Date->new();
-    # это нужно перенсти во вюху
-    my $cgi = CGI->new;
-    my $session =  Models::Utilits::Sessionme->new($cgi);
-
-    my $cookie = $cgi->cookie(CGISESSID => $session->getId());
-    print $cgi->header( -cookie=>$cookie, -charset=>'utf-8');
-
+       
 
 
 
@@ -58,13 +53,16 @@ sub main
 
     my $view = Views::View->new();
     $view->go(TDIR.'/');
+    
 
-
+   
     ##debug info
     #my $debug = Models::Utilits::Debug->new();
     #my $d=$debug->getMsg();
     #print  Dumper(\$d);
     #print $date->{'nextpage'};
+    #print Config::Config->getBaseUrl();
+
 }
 
 

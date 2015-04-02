@@ -16,6 +16,7 @@ sub new
             'nextpage'=>'',#следующая страница
             'pageparam'=>undef,#парам для страницы
             'warings'=>undef, #предупреждения
+            'redirect'=>undef,
             'db'=>{}
         },$class);
 

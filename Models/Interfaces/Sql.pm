@@ -225,7 +225,7 @@ sub execute
         $self->{'sql'}.=' WHERE '.$self->{'where'};
     }
 
-   print $self->{'sql'};
+    #print $self->{'sql'};
     unless($sth = $dbh->prepare($self->{'sql'} ))
     {
         return 0;

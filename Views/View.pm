@@ -9,6 +9,11 @@ use Models::Utilits::File;
 use Data::Dumper;
 use Models::Utilits::UseClass;
 use Config::Config;
+
+use CGI qw(:cgi-lib :escapeHTML :unescapeHTML);
+#use CGI::Carp qw(fatalsToBrowser); # позволит выводить ошибки в браузер
+use Models::Utilits::Sessionme;
+
 $|=1;
 
 #my $date = Models::Utilits::Date->new();
@@ -25,6 +30,20 @@ sub new
 sub go()
 {
     my ($self,$tdir)=@_;
+
+    my $cgi = CGI->new;
+    my $session =  Models::Utilits::Sessionme->new($cgi);
+
+    my $cookie = $cgi->cookie(CGISESSID => $session->getId());
+    
+    if($self->{'data'}->{'redirect'} )
+    {
+        print $cgi->redirect($self->{'data'}->{'redirect'} );
+    } 
+    
+    
+    print $cgi->header( -cookie=>$cookie, -charset=>'utf-8');
+
     #print "Content-type: text/html; encoding='utf-8'\n\n";
     #my $templete=$tdir.'Resources/html/'.$self->{'data'}->{'nextpage'}.'.html';
     #print $templete;
