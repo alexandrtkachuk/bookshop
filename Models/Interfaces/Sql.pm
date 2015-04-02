@@ -5,7 +5,7 @@ use warnings;
 use strict;
 use DBI; 
 use Data::Dumper;
-
+use Models::Validators::Varibles;
 
 
 
@@ -28,7 +28,10 @@ sub new
     my $class = ref($_[0])||$_[0];
     return bless(
         {
-            'sql'=>undef
+            'sql'=>undef, #string quvery
+            'table'=>undef, #имя таблици 
+            'where'=>undef
+
         },$class);
 
 }
@@ -59,14 +62,61 @@ sub connect
 }
 
 
+sub where
+{
+    return 0 unless($dbh);
+    my($self,$val1,$val2,$sign, $union) = @_;
+    
+    unless($sign)
+    {
+        $sign='=';
+    }
+    
+    unless($union)
+    {
+        $union='AND';
+    }
+
+    
+    if($self->{'where'})
+    {
+       $self->{'where'}.=" $union $val1 $sign ".$dbh->quote($val2).' ';
+    }
+    else
+    {
+        $self->{'where'}="$val1 $sign ".$dbh->quote($val2).' ';
+    
+    }
+    
+    return 1;
+
+
+}
+
 
 sub select
 {
-    # return 0 unless($dbh);
-    #my($self,$str) = @_;
+    return 0 unless($dbh);
+    my($self,$arr) = @_;
+    
+    $self->{'sql'}='SELECT '; 
+    
+    for(@$arr){
+         $self->{'sql'}.= $_;
+        if(\$_ != \$$arr[-1])
+        {
+             $self->{'sql'}.= ', ';
+        }
+
+    }
+
+    $self->{'sql'}.=' FROM %tabname% ';
+    #print $self->{'sql'};
+
+
     #return $sth = $dbh->prepare($str);
     #    or die $dbh->errstr;
-    #return 1;
+    return 1;
     
 
 }
@@ -81,12 +131,56 @@ sub insert
 
     #print Dumper $hash;
     #my %t=%$hash;
-    foreach my  $k (keys %$hash)
+    
+
+    $self->{'sql'}='INSERT INTO %tabname%  (';
+    my $left= keys %$hash; 
+    foreach my  $k (keys %$hash )
     {
-        print   $$hash{$k}."=".ref(\$$hash{$k})."\n";
+        #print   $$hash{$ky};
+        $self->{'sql'}.= $k;
+        if(0 < --$left  )
+        {
+            $self->{'sql'}.=', ';
+
+        }    
     }
+    
+    $self->{'sql'}.=')   VALUES (';
+    $left= keys %$hash;
+    foreach my  $k (keys %$hash )
+    {
+        #print   $$hash{$ky};
+        $self->{'sql'}.= $dbh->quote($$hash{$k});
+        if(0 < --$left  )
+        {
+            $self->{'sql'}.=', ';
+
+        }    
+    }
+
+    $self->{'sql'}.=')   ';
+
+
+
+    #Models::Validators::Varibles->isNumeric();
+    
+    #print $self->{'sql'};
     return 1;
     
+}
+
+
+sub setTable
+{
+    my($self,$name) = @_;
+    unless($name)
+    {
+        return 0;
+    }
+    
+    $self->{'table'} = $name;
+    return 1;
 }
 
 
@@ -115,14 +209,28 @@ sub execute
         return 0;
     }
     
-    $self->{'sql'}= $dbh->quote( $self->{'sql'});
+    #$self->{'sql'}= $dbh->quote( $self->{'sql'});
 
+    
+    unless($self->{'table'})
+    {
+        return 0;
+    }    
+    
+   $self->{'sql'} =~s/%tabname%/$self->{'table'}/;
+    
 
+    if($self->{'where'} )
+    {
+        $self->{'sql'}.=' WHERE '.$self->{'where'};
+    }
+
+   print $self->{'sql'};
     unless($sth = $dbh->prepare($self->{'sql'} ))
     {
         return 0;
     }
-
+    
     return 0 unless($sth);
     return $sth->execute();
 }

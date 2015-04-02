@@ -32,7 +32,7 @@ sub go
     my $tt=@rout;
     #print $tt;
     my $url=$rout[0];
-    #$url='Userme';
+    #$url='Admin';
     if(length($url)==0)
     {
         $url='Index';

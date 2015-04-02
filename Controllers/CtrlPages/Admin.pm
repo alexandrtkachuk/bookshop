@@ -42,8 +42,17 @@ sub go
 
 
     my $admin= Models::Performers::Admin->new();
-    $admin->add( 'admin','admin','admin@mail.ru');
+    #$admin->add( 'admin','admin','admin@mail.ru');
+    (
+        ($in{'email'}) && ($in{'pass'} )
 
+        &&(
+            ($admin->login($in{'email'},$in{'pass'}) )
+            || ( print 'err pass' )
+        )
+    )
+    ||( print 'enter pass and mail' ); 
+    #$admin->login($in{'mail'},$in{'pass'});
 
 }
 

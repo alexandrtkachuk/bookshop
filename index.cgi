@@ -65,7 +65,6 @@ sub main
     #my $d=$debug->getMsg();
     #print  Dumper(\$d);
     #print $date->{'nextpage'};
-
 }
 
 
