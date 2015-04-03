@@ -57,8 +57,8 @@ sub main
 
    
     ##debug info
-    #my $debug = Models::Utilits::Debug->new();
-    #my $d=$debug->getMsg();
+    my $debug = Models::Utilits::Debug->new();
+    my $d=$debug->getMsg();
     #print  Dumper(\$d);
     #print $date->{'nextpage'};
     #print Config::Config->getBaseUrl();

@@ -1,3 +1,64 @@
 <h2>Добро пожатовать Админ</h2>
-        <hr/>
-        <p> <a href="%%baseurl%%logout">exit</a>   </p>
+    <hr/>
+    <p> <a href="%%baseurl%%logout">exit</a>   </p>
+
+    <ul>
+        <li><a href="%%baseurl%%addbook">Добавить книгу</a> </li>
+        <li>Список книг</li>
+        <li>Список поьзователей</li>
+        <li>Список заказов</li>
+    </ul>
+
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+        Добавить автора
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Add author</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="messauthor"></p>
+
+                    <input type="name"  id="nameauthor" > 
+                    <button type="button" class="btn btn-default" onclick="sendAuthorName()" >add</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <!--button type="button" class="btn btn-primary">Save changes</button-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal2">
+        Добавить жанр
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Add genre</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="messgenre"></p>
+                    <input type="name"  id="namegenre" > 
+                    <button type="button" class="btn btn-default" onclick="sendGenreName()" >add</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <!--button type="button" class="btn btn-primary">Save changes</button-->
+                </div>
+            </div>
+        </div>
+    </div>
+

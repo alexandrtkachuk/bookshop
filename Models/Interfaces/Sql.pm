@@ -223,6 +223,7 @@ sub execute
     if($self->{'where'} )
     {
         $self->{'sql'}.=' WHERE '.$self->{'where'};
+        $self->{'where'}=undef; #clear 
     }
 
     #print $self->{'sql'};

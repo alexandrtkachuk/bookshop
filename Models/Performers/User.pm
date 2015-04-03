@@ -167,4 +167,36 @@ sub logout
 
 }
 
+
+sub getName
+{
+    my ($self)=@_;
+
+    return $self->{'name'};
+}
+
+sub getId
+{
+    my ($self)=@_;
+
+    return $self->{'id'};
+}
+
+sub getEmail
+{
+    my ($self)=@_;
+
+    return $self->{'email'};
+}
+
+
+sub getRole
+{
+    my ($self)=@_;
+
+    return $self->{'role'};
+
+}
+
+
 1;

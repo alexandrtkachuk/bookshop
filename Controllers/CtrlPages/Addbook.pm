@@ -1,4 +1,4 @@
-package Controllers::CtrlPages::Admin;
+package Controllers::CtrlPages::Addbook;
 
 use warnings;
 use strict;
@@ -17,9 +17,7 @@ use CGI qw(:cgi-lib :escapeHTML :unescapeHTML);
 ReadParse();
 
 
-#module which is responsible for admin page
-#
-my $Data={};
+
 
 
 sub new
@@ -35,10 +33,9 @@ sub go
 
     my ($self)=@_;
 
-
-    my $admin= Models::Performers::Admin->new();
+     my $admin= Models::Performers::Admin->new();
     #$admin->add( 'admin','admin','admin@mail.ru');
-
+    $debug->setMsg( Dumper \%in );
     
     unless($admin->isLogin())
     {
@@ -46,22 +43,8 @@ sub go
         $data->{'redirect'}=Config::Config->getBaseUrl().'login';
 
     }
-        
     
-        $data->{'pageparam'}='ListAdmin';
-    
-
-   return 1;
-
-}
-
-
-
-sub addauthor
-{
-    
-    return 1;
-
+    return 1;    
 
 }
 
