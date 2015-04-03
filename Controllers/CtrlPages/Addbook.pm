@@ -14,6 +14,7 @@ use vars qw(%in);
 use Models::Utilits::Email::Valid;
 use CGI qw(:cgi-lib :escapeHTML :unescapeHTML);
 
+#use CGI;
 ReadParse();
 
 
@@ -35,7 +36,7 @@ sub go
 
      my $admin= Models::Performers::Admin->new();
     #$admin->add( 'admin','admin','admin@mail.ru');
-    $debug->setMsg( Dumper \%in );
+    
     
     unless($admin->isLogin())
     {
@@ -43,8 +44,54 @@ sub go
         $data->{'redirect'}=Config::Config->getBaseUrl().'login';
 
     }
-    
-    return 1;    
+
+    if($in{addbook}){
+         $debug->setMsg( Dumper \%in );
+
+        my $cgi = new CGI;
+        my $dir = $cgi->param('dir');
+        my $file = $cgi->param('file');
+
+        my $tdir = Config::Config->getDir();
+        ##################
+
+        ############################
+
+        
+        (
+            ($in{'title'})
+            && ($in{'price'})
+            && ($in{'author'})
+            && ($in{'genre'})
+            && ($in{'info'})
+            && ($in{'file'})
+
+        ) ||
+        (     ($data->{'warnings'}=2)
+            &&(return 0)   
+        );
+        
+        
+        $file=~m/^.*(\\|\/)(.*)/; # strip the remote path and keep the filename    
+        eval 
+        {
+            open( my $hf, ">$tdir/Resources/img/$file") or  $debug->setMsg( 'no open file')  ;
+            while(<$file>)
+            {
+                print $hf $_;
+            }
+        };
+        if($@)
+        {
+            $debug->setMsg( $@);
+
+        }
+
+
+
+    }
+
+return 1;    
 
 }
 

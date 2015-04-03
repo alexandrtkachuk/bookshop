@@ -1,5 +1,8 @@
 DROP TABLE IF EXISTS shop_books ;
-CREATE TABLE shop_books (id INT NOT NULL AUTO_INCREMENT , price FLOAT ,  
+CREATE TABLE shop_books (id INT NOT NULL AUTO_INCREMENT , price FLOAT , 
+    title VARCHAR(128),
+    info TEXT,
+    image VARCHAR(128),
     PRIMARY KEY (id) );
 
 DROP TABLE IF EXISTS shop_users;

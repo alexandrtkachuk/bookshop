@@ -86,6 +86,37 @@ sub add
 
 }
 
+sub getAll
+{
+
+    my ($self)=@_;
+
+    my @arr= ( 'name' , 'id' );
+    $self->{'sql'}->setTable('shop_genre');
+    $self->{'sql'}->select(\@arr);
+    unless($self->{'sql'}->execute())
+    {
+        $debug->setMsg( $self->{'sql'}->getError()); 
+        return 0;
+    }
+
+    return $self->{'sql'}->getResult();
+    
+
+
+
+}
+
+sub getId
+{
+
+    my ($self,$id)=@_;
+    unless($id)
+    {
+        return 0;
+    }
+
+}
 
 
 

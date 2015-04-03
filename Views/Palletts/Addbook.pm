@@ -10,7 +10,14 @@ use vars qw(@ISA);
 our @ISA = qw(Views::Palletts::Index);
 require Views::Palletts::Index;
 use Config::Config;
+use Models::Performers::Authors;
+use Models::Performers::Genre;
+use Data::Dumper;
+
+
+
 my $data = Models::Utilits::Date->new();
+
 
 sub createHash
 {
@@ -45,5 +52,43 @@ sub warings
 
 }
 
+
+sub Authors
+{
+    #return list authors
+    my $author = Models::Performers::Authors->new();
+    my $res = $author->getAll();
+    my $str='';
+
+    for(@$res )
+    {
+        $str.='<option value="'.$_->{'id'}.';" >'.$_->{'name'}.'</option>';
+    } 
+    #print Dumper $res;
+
+    return $str;
+
+
+}
+
+
+
+sub Genres
+{
+    #return list authors
+    my $genre = Models::Performers::Genre->new();
+    my $res = $genre->getAll();
+    my $str='';
+
+    for(@$res )
+    {
+        $str.='<option value="'.$_->{'id'}.';" >'.$_->{'name'}.'</option>';
+    } 
+    #print Dumper $res;
+
+    return $str;
+
+
+}
 
 1;

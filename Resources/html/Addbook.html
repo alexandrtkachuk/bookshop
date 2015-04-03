@@ -2,28 +2,22 @@
 
 
 <div class="container"> 
+    <p><b>##warings##</b></p>
+
+    <form  method="POST"    ENCTYPE="multipart/form-data"  >
 
 
-    <form  method="POST" >
-
-
-        <p> <label>Название книги: </label>  <input  name="name"  type="text" > </p>
+        <p> <label>Название книги: </label>  <input  name="title"  type="text" > </p>
 
         <p> <label>Цена: </label>  <input  name="price"  type="text" > </p>
         <p> <label>Автор: </label> <br />
         <select multiple="multiple"  name="author" >
-            <option>Чебурашка</option>
-            <option>Крокодил Гена</option>
-            <option>Шапокляк</option>
-            <option>Крыса Лариса</option>
+                        ##Authors##
         </select>   </p>
         <p>
         <label>Жанр: </label> </br>
         <select multiple="multiple"  name="genre" >
-            <option value='0;' >Чебурашка</option>
-            <option value='9;' >Крокодил Гена</option>
-            <option  value='3;' >Шапокляк</option>
-            <option value='4;' >Крыса Лариса</option>
+                        ##Genres##
         </select>          
 
 
@@ -31,10 +25,13 @@
         </p>
         <input type="hidden"  value="1" name="addbook" >
 
-        <p> <label>описание: </label> <br />  <textarea name="text" >  </textarea> </p>
+        <p> <label>описание: </label> <br />  <textarea name="info" >  </textarea> </p>
+        <p>
+            <label>Please select a file to upload:</label> 
+            <INPUT TYPE="FILE" NAME="file">
+        <p>
 
-
-        <p> <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <p> <button class="btn btn-lg btn-primary btn-block" type="submit">ADD</button>
         </p>
     </form>
 
