@@ -4,7 +4,7 @@ use warnings;
 use strict;
 
 
-
+use Config::Config;
 use Models::Utilits::Debug;
 use Data::Dumper;
 use Models::Utilits::Date;
@@ -47,7 +47,7 @@ sub add
         $fname,
         $info,
         $refauthors,
-        $refgnre )=@_;
+        $refgenre )=@_;
 
     #####################
     (
@@ -56,10 +56,10 @@ sub add
         ($fname)  &&
         ($info) &&
         ($refauthors) &&
-        ($refgnre)
+        ($refgenre)
     ) || ( return 0 );
 
-
+$debug->setMsg( Dumper $refauthors );
 
     my %hash=(
         'title'=>$title,
@@ -77,15 +77,98 @@ sub add
         return 0;
     }
     
+   my $lastId =  $self->{'sql'}->getLastId();
+
+   # print 'last id='.$self->{'sql'}->getLastId()."\n";
+
 
     ###add to book2author####
     #########################
+    
+    $self->{'sql'}->setTable('shop_book2author');
+    for(@$refauthors)
+    {   
+         my %hash2 =
+        (
+            'idbook'=> $lastId,
+            'idauthor'=>$_
+        );
+$debug->setMsg( $hash2{'idauthor'} );
+        $self->{'sql'}->insert(\%hash2);
+        
+        unless($self->{'sql'}->execute())
+        { 
+            $debug->setMsg( $self->{'sql'}->getError()); 
+            return 0;
+        }
+    }
 
     ###add to book2genge#####
     #########################
+    
+    $self->{'sql'}->setTable('shop_book2genre');
+    for(@$refgenre)
+    {   
+        my %hash2 =
+        (
+            'idbook'=> $lastId,
+            'idgenre'=>$_
+        );
 
-return 1;
+        $self->{'sql'}->insert(\%hash2);
+        
+        unless($self->{'sql'}->execute())
+        { 
+            $debug->setMsg( $self->{'sql'}->getError()); 
+            return 0;
+        }
+    }
+
+
+return $title;
 
 }
+
+
+sub getAll
+{
+    my ($self)=@_;
+   
+
+    $self->{'sql'}->setTable('shop_book2author , shop_author');
+    $self->{'sql'}->setDISTINCT(1);
+
+
+    $self->{'sql'}->GROUP_CONCAT('shop_author.name','idauthor');
+    $self->{'sql'}->where('shop_book2author.idbook = shop_books.id');
+    $self->{'sql'}->where('shop_book2author.idauthor = shop_author.id');
+
+
+
+    my $temp ='('.$self->{'sql'}->getSql().')';
+
+    $self->{'sql'}->setTable('shop_books');
+
+    my @arr= ( 'shop_books.id','shop_books.title', $temp );
+    $self->{'sql'}->select(\@arr);
+
+    
+    unless($self->{'sql'}->execute())
+    {
+        $debug->setMsg( $self->{'sql'}->getError()); 
+        return 0;
+    }
+
+    return $self->{'sql'}->getResult();
+    #return $self->{'sql'}->getSql();
+}
+
+sub delete
+{
+    my ($self,$id)=@_;
+
+    return 0;
+}
+
 
 1;

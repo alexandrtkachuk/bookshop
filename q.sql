@@ -43,10 +43,10 @@ CREATE TABLE shop_genre (id INT NOT NULL AUTO_INCREMENT , name VARCHAR(32) ,
     PRIMARY KEY (id) );
 
 DROP TABLE IF EXISTS shop_book2genre;
-CREATE TABLE shop_book2genre (idUser INT , sale INT);
+CREATE TABLE shop_book2genre (idbook INT , idgenre INT);
 
 DROP TABLE IF EXISTS shop_book2author;
-CREATE TABLE shop_book2author (idUser INT , sale INT);
+CREATE TABLE shop_book2author (idbook INT , idauthor INT);
 
 
 

@@ -47,6 +47,16 @@ sub warings
     {
         $mess = 'не все поля заполнены в форме';
     }
+    elsif($data->{'warnings'}==4 )
+    {
+        $mess = 'ошибка записи';
+    }
+    elsif($data->{'warnings'}==5 )
+    {
+        $mess = 'запись успешно добавлена';
+    }
+
+
 
     return $mess;
 

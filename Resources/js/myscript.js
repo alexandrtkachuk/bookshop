@@ -20,7 +20,7 @@ function sendAuthorName()
                  var t = $.parseJSON(data);
                 if(t.warings==0)
                 {
-                    $('#messauthor').text('Успешно добавленно');
+                    $('#messauthor').text('Успешно добавленно: '+ aname);
                 }
                 else
                 {
@@ -59,7 +59,7 @@ function sendGenreName()
                 //console.log(t.warings);
                 if(t.warings==0)
                 {
-                    $('#messgenre').text('Успешно добавленно');
+                    $('#messgenre').text('Успешно добавленно:' + gname);
                 }
                 else
                 {

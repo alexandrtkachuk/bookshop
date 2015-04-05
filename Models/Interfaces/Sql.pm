@@ -1,5 +1,5 @@
 package Models::Interfaces::Sql;
-#user7
+
 
 use warnings;
 use strict;
@@ -7,8 +7,8 @@ use DBI;
 use Data::Dumper;
 use Models::Validators::Varibles;
 
-
-
+use Models::Utilits::Debug;
+my $debug = Models::Utilits::Debug->new();
 
 my($database, $host,$user, $pass,$dbh,$sth );
 
@@ -30,8 +30,9 @@ sub new
         {
             'sql'=>undef, #string quvery
             'table'=>undef, #имя таблици 
-            'where'=>undef
-
+            'where'=>undef,
+            'DISTINCT'=>' ',
+            'GROUP_CONCAT'=>undef
         },$class);
 
 }
@@ -77,14 +78,30 @@ sub where
         $union='AND';
     }
 
-    
-    if($self->{'where'})
+     
+
+    if($self->{'where'})    
     {
-       $self->{'where'}.=" $union $val1 $sign ".$dbh->quote($val2).' ';
+        if($val2)
+        {
+            $self->{'where'}.=" $union $val1 $sign ".$dbh->quote($val2).' ';
+        }
+        else
+        {
+            $self->{'where'}.=" $union $val1 ";
+        }
     }
     else
     {
-        $self->{'where'}="$val1 $sign ".$dbh->quote($val2).' ';
+        if($val2)
+        {
+            $self->{'where'}.=" $val1 $sign ".$dbh->quote($val2).' ';
+        }
+        else
+        {
+            $self->{'where'}.=" $val1 ";
+        }
+
     
     }
     
@@ -99,7 +116,7 @@ sub select
     return 0 unless($dbh);
     my($self,$arr) = @_;
     
-    $self->{'sql'}='SELECT '; 
+    $self->{'sql'}='SELECT  %DISTINCT% '; 
     
     for(@$arr){
          $self->{'sql'}.= $_;
@@ -120,6 +137,9 @@ sub select
     
 
 }
+
+
+
 
 
 sub insert
@@ -197,11 +217,52 @@ sub setQuery
 }
 
 
+sub getLastId
+{
+    my($self) = @_;
+    return 0 unless($dbh);
+
+    return $dbh->last_insert_id( undef, undef, undef, undef );
+
+}
 
 
 
-sub execute
-{   
+
+sub setDISTINCT
+{
+    my($self,$value) = @_;
+    if($value)
+    {
+        $self->{'DISTINCT'} = 'DISTINCT';
+    }
+    else
+    {
+        $self->{'DISTINCT'} = ' ';
+    }
+    
+    return 1;
+}
+
+
+sub GROUP_CONCAT
+{
+    
+    return 0 unless($dbh);
+    my($self,$val1,$val2) = @_;
+    
+    $self->{'sql'}="SELECT GROUP_CONCAT( $val1 ) as  $val2"; 
+  
+    
+    $self->{'sql'}.=' FROM %tabname% ';
+    
+    return 1;
+
+}
+
+
+sub getSql
+{
 
     my($self) = @_;
     unless($self->{'sql'})
@@ -217,8 +278,10 @@ sub execute
         return 0;
     }    
     
-   $self->{'sql'} =~s/%tabname%/$self->{'table'}/;
+    $self->{'sql'} =~s/%tabname%/$self->{'table'}/;
     
+    $self->{'sql'} =~s/%DISTINCT%/$self->{'DISTINCT'}/;
+
 
     if($self->{'where'} )
     {
@@ -227,6 +290,23 @@ sub execute
     }
 
     #print $self->{'sql'};
+    #$debug->setMsg( $self->{'sql'}); 
+    return  $self->{'sql'};
+
+}
+
+
+sub execute
+{   
+
+    my($self) = @_;
+    
+    
+    unless($self->getSql())
+    {
+        return 0;
+    }
+    ########################### 
     unless($sth = $dbh->prepare($self->{'sql'} ))
     {
         return 0;

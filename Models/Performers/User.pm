@@ -15,7 +15,7 @@ use Models::Utilits::Sessionme;
 my $session =  Models::Utilits::Sessionme->new();
 
 my $debug = Models::Utilits::Debug->new();
-
+my $data = Models::Utilits::Date->new();
 
 #$debug->setMsg(md5('test'));
 
@@ -54,9 +54,27 @@ sub add
 
     my ($self,$name,$pass,$email)=@_;
     
+    ########################
+    my @arr= ( 'name' );
+    $self->{'sql'}->select(\@arr);
+
+    $self->{'sql'}->setTable('shop_users');
+    $self->{'sql'}->where('email',$email);
 
 
+    unless($self->{'sql'}->execute())
+    {
+        $debug->setMsg( $self->{'sql'}->getError()); 
+        return 0;
+    }
 
+    if($self->{'sql'}->getRows())
+    {
+        $data->{'warnings'}=3;
+        return 0; #record exists 
+    }
+
+    ##########################################
 
     $debug->setMsg("add user: name: $name \n
         pass: $pass \n email: $email ");

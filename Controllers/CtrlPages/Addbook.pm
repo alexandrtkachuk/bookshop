@@ -4,7 +4,7 @@ use warnings;
 use strict;
 
 use Config::Config;
-
+use Models::Performers::Book;
 use Data::Dumper;
 use Models::Utilits::Date;
 use Models::Performers::Admin;
@@ -13,7 +13,7 @@ my $debug = Models::Utilits::Debug->new();
 use vars qw(%in);
 use Models::Utilits::Email::Valid;
 use CGI qw(:cgi-lib :escapeHTML :unescapeHTML);
-
+use Encode;
 #use CGI;
 ReadParse();
 
@@ -71,11 +71,25 @@ sub go
             &&(return 0)   
         );
         
+        #my @authors=('1','2','3'); 
+        #my @authors=split /;/, '1;4;3;' ;
+        #    my $str = encode('utf8',$in{'author'});
+        my @authors=split (";\0", $in{'author'}) ;
+
+        my @genres=split /;\0/, $in{'genre'} ;
+        $debug->setMsg( Dumper @authors );
+        $debug->setMsg( '##################' );
         
+         $debug->setMsg( $in{'author'});
+         $debug->setMsg( '##################' );
+
         $file=~m/^.*(\\|\/)(.*)/; # strip the remote path and keep the filename    
         eval 
         {
-            open( my $hf, ">$tdir/Resources/img/$file") or  $debug->setMsg( 'no open file')  ;
+            open( my $hf, ">$tdir/Resources/img/$file") or  (
+                ($debug->setMsg( 'no open file'. ">$tdir/Resources/img/$file")) &&
+                (return 0 )
+            )  ;
             while(<$file>)
             {
                 print $hf $_;
@@ -84,9 +98,19 @@ sub go
         if($@)
         {
             $debug->setMsg( $@);
+            return 0;
+        }
+        
+         my $book =  Models::Performers::Book->new();
+        
+         unless($book->add( $in{'title'},$in{'price'},$in{'file'},$in{'info'},\@authors, \@genres))
+        {
 
+            $data->{'warnings'}=4;
+            return 0;
         }
 
+        $data->{'warnings'}=5;
 
 
     }
