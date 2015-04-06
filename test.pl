@@ -74,7 +74,7 @@ sub getAllbooks
 sub main
 {
 
-    #addadmin();
+    addadmin();
     #addbook();
     getAllbooks();
     my $d=$debug->getMsg();

@@ -48,7 +48,7 @@ sub go
     }
         
     
-        $data->{'pageparam'}='ListAdmin';
+    $data->{'pageparam'}='ListAdmin';
     
 
    return 1;

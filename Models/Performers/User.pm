@@ -82,7 +82,7 @@ sub add
     my %hash=('name'=>$name, 
         'pass'=>md5($pass),
         'email'=>$email,
-        'role'=>0 # 0=admin , 1=user
+        'role'=>1 # 0=admin , 1=user
     );
     
     $self->{'sql'}->insert(\%hash);
