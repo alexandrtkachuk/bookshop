@@ -143,13 +143,29 @@ sub getAll
     $self->{'sql'}->where('shop_book2author.idbook = shop_books.id');
     $self->{'sql'}->where('shop_book2author.idauthor = shop_author.id');
 
+    
+
+    my $authors ='('.$self->{'sql'}->getSql().') as authors ';
+    
+    ######genre
+    $self->{'sql'}->setTable('shop_book2genre , shop_genre');
+    $self->{'sql'}->setDISTINCT(1);
 
 
-    my $temp ='('.$self->{'sql'}->getSql().')';
+    $self->{'sql'}->GROUP_CONCAT('shop_genre.name','idgenre');
+    $self->{'sql'}->where('shop_book2genre.idbook = shop_books.id');
+    $self->{'sql'}->where('shop_book2genre.idgenre = shop_genre.id');
 
+    my $genres  ='('.$self->{'sql'}->getSql().')  as genres';
+    
+
+    #########
     $self->{'sql'}->setTable('shop_books');
+    
+    $self->{'sql'}->setDISTINCT(1);
 
-    my @arr= ( 'shop_books.id','shop_books.title', $temp );
+    my @arr= ( 'shop_books.id','shop_books.title','price', 'info', 'image', 
+        $authors , $genres );
     $self->{'sql'}->select(\@arr);
 
     
@@ -158,8 +174,10 @@ sub getAll
         $debug->setMsg( $self->{'sql'}->getError()); 
         return 0;
     }
+    
 
-    return $self->{'sql'}->getResult();
+    my $res = $self->{'sql'}->getResult(); 
+    return $res;
     #return $self->{'sql'}->getSql();
 }
 

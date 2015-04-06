@@ -35,6 +35,10 @@ sub go
     my ($self) = @_;
     my $user = Models::Performers::User->new();
 
+    if($in{'num'})
+    {
+        $data->{'numpage'}=$in{'num'};
+    }
 
     ##сначала функции которые доступны всем пользовотелям затем только админу
 

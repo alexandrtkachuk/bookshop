@@ -14,6 +14,7 @@ sub new
     $self||=bless({
             'err' =>{},
             'nextpage'=>'',#следующая страница
+            'numpage'=>undef,
             'pageparam'=>undef,#парам для страницы
             'warings'=>undef, #предупреждения
             'redirect'=>undef,

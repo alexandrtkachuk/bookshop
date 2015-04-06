@@ -1,0 +1,38 @@
+.mycard p
+{
+	color:#fff;
+}
+
+
+.tovar img
+{
+	width:80%;
+	max-height: 350px;
+	
+}
+
+.tovar
+{
+	height:580px;
+}
+
+
+.input-mini
+{
+	width:50px;
+}
+
+input.ng-invalid
+{
+	color:red;
+}
+
+
+.width20{
+	width:25%; 
+}
+
+p.small 
+{
+	  font-size: 92%;
+}

@@ -1,0 +1,16 @@
+<div>
+	<h3>{{cB.sps}}</h3>
+	<form name="myForm">
+		<p>Имя <input type="text" name="name"  ng-model="cB.name"  ng-minlength="2" required> </input></p>
+		<p>Телефон: <input ng-minlength="5" name="phone"   ng-model="cB.phone" required></input></p>
+		<p>Email: <input name="input" type="email"   ng-model="cB.email"  ng-minlength="5" required> </input>
+		<span class="error" ng-show="(!myForm.input.$valid || !myForm.input.$error.email)">
+        Заполните верно!</span>
+		</p>
+		<p>Пол: <br />
+			<input type="radio" ng-model="cB.male" value="m"> М<br/>
+			<input type="radio" ng-model="cB.male" value="w"> Ж <br/>
+		</p>
+		<p><button ng-click="cB.send(myForm)">Отправить</button></p>
+		</form>
+</div>
