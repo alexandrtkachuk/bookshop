@@ -128,16 +128,40 @@ sub select
     }
 
     $self->{'sql'}.=' FROM %tabname% ';
-    #print $self->{'sql'};
-
-
-    #return $sth = $dbh->prepare($str);
-    #    or die $dbh->errstr;
     return 1;
     
 
 }
 
+sub update
+{
+   return 0 unless($dbh);
+    my($self,$hash) = @_;
+    
+
+    #print Dumper $hash;
+    #my %t=%$hash;
+    
+
+    $self->{'sql'}='UPDATE %tabname% SET  ( ';
+    my $left= keys %$hash; 
+    foreach my  $k (keys %$hash )
+    {
+        #print   $$hash{$ky};
+        $self->{'sql'}.= $k.'= '.$dbh->quote($$hash{$k});
+        if(0 < --$left  )
+        {
+            $self->{'sql'}.=', ';
+
+        }    
+    }
+    
+    $self->{'sql'}.=')   ';
+
+
+
+    return 1;
+}
 
 
 
@@ -340,6 +364,19 @@ sub getResult
 
 }
 
+
+sub delete
+{
+    return 0 unless($dbh);
+    my($self) = @_;
+
+    $self->{'sql'}='DELETE '; 
+
+    $self->{'sql'}.=' FROM %tabname% ';
+    return 1;
+
+
+}
 
 
 sub DESTROY 

@@ -1,4 +1,4 @@
-App.controller('cUser',function(mCart, $http){
+App.controller('cUser',function(mCart, $http ,fLang){
 	
 	this.user;
 	var  temp={value: '',
@@ -16,6 +16,7 @@ App.controller('cUser',function(mCart, $http){
 				temp.value=  this.user.name;
 				temp.value2=  '\  Выход';
 				temp.link='logout';
+                mCart.user=true;
 			}
 			else
 			{

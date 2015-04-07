@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ISTRINGTABLE ID="joomla" LANG="ru">
+<ISTRINGTABLE ID="bookshop" LANG="ru">
     <ISTRING>
         <KEY>LANG_exit</KEY>
         <VALUE>Выход</VALUE>

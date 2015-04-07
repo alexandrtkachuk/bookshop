@@ -2,22 +2,31 @@ var App=angular.module('myshop',['ui.router']);
 
 
 
-App.factory('mCart', function() {
+App.factory('mCart', function($http ) {
   
-  
+    
+
   var cart={"count":0,
 	  "arr": new Array(),
 	  "add": null,
 	  "del": null,
 	  "setLS": null,
-	  "getLS": null
-	  };
+	  "getLS": null,
+      "user":null
+        	  
+  };
   
   
   
   cart.add=function (el,count){
 		
-		
+        //нужно проверить зареган ли пользователь
+            
+     if(!cart.user)
+     {
+        alert('Войите в систему');
+        //return 0;
+     } 
 			var obj={
 				'el':el,
 				'count': count
@@ -72,6 +81,13 @@ App.factory('mCart', function() {
 			"count":this.count,
 			"arr":this.arr
 			}
+        var test = JSON.stringify(temp);
+        //$http.get('api/addcart/?data='+test).success(function (data, status, headers, config) {
+        
+        //console.log(data); });
+        
+        
+        //console.log(test);
 		window.localStorage.taishop=JSON.stringify(temp);	
 	}
 	

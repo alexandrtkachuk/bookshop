@@ -17,8 +17,9 @@ use Models::Performers::User;
 use Models::Utilits::Lang;
 use Models::Utilits::File;
 use XML::Simple qw(:strict);
-
-
+use Models::Utilits::Debug;
+my $debug = Models::Utilits::Debug->new();
+use Data::Dumper;
 sub createHash
 {
     
@@ -59,7 +60,10 @@ sub  getOut
     {
         return $self->getLang();
     }
-
+    elsif($data->{'pageparam'} eq 'addcart' )
+    {
+        return $self->addCart();
+    }
 
     
 
@@ -84,10 +88,11 @@ sub getWarings
 
 sub getJSON
 {
-   my %hash = 
+   my $d=$debug->getMsg();
+    my %hash = 
     (
         'warings'=>getWarings(),
-        'debug' =>'debug'
+        'debug' =>Dumper($d)
     );
 
     return  encode_json \%hash;
@@ -130,25 +135,22 @@ sub getLang
 
     my $lang = Models::Utilits::Lang->new();
     my $res;
-    #$res= $lang->get();
-    #print "\n";
-    my $tdir = Config::Config->getDir();;
-    my $fullpath= $tdir.'/Resources/langs/ru.strings';
-    #print $fullpath; 
-    my $file = Models::Utilits::File->new();
-    my $xml = $file->getFile($fullpath); 
-
-    #print $xml;
-
-    if($xml)
+    my $ref =  $lang->get();
+    if($ref)
     { 
-        my $ref = XMLin($fullpath, forcearray => 1, keyattr => ['ISTRING'] );
+        
         $res= encode_json $ref;
     }
+
     return  decode('utf8',$res);
     
 
 }
 
+
+sub addCart
+{
+    return getJSON();
+}
 
 1;

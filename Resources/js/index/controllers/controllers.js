@@ -5,13 +5,16 @@ App.service('products', function($http) {
 	this.getItems= function(callback) { 
 		
 		  $http.get('api/books').success(callback);	
-	
+		
+			
+		
+		
 	}
   
 });
 
 
-App.controller('iControler',function(products, mCart ,$scope){
+App.controller('iControler',function(products, mCart ,$scope ,fLang){
 	
 	this.meclass='';
 	this.bname='по 4 элемена';
@@ -32,7 +35,7 @@ App.controller('iControler',function(products, mCart ,$scope){
         });
 	
 	
-	
+	console.log(fLang.value);
 	
 	
 	

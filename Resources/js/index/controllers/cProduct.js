@@ -11,7 +11,7 @@ App.service('getproduct', function($http) {
 });
 
 
-App.controller('cUser',function(getproduct, $stateParams, mCart){
+App.controller('cProduct',function(getproduct, $stateParams, mCart){
 	
 	
 	

@@ -18,6 +18,11 @@
           <div  ng-controller="cUser as cU" class="username">
 				<p > <span ng-bind="cU.text.value"></span>   <a  href="{{cU.text.link}}"  ng-bind="cU.text.value2"></a>      </p>
           </div>
+		  <div  ng-controller="cLang as cL">
+				
+				<button ng-click="cL.ru()">ru</button>
+				<button ng-click="cL.en()">en</button>
+			</div>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>

@@ -12,11 +12,11 @@ use lib TDIR.'/Models/Utilits';
 #use lib TDIR.'/Downloads/XML-SAX-0.99';
 use XML::Simple qw(:strict);
 
-
+Config::Config->setDir(TDIR);
 #use XML::Parser;
 #use XML::SAX;
  
-
+use Models::Performers::Cart;
 use Models::Performers::Book;
 use Models::Utilits::Debug;
 use Data::Dumper;
@@ -86,21 +86,24 @@ sub getAllbooks
 sub getLang
 {
     my $lang = Models::Utilits::Lang->new();
-    print $lang->get();
-    print "\n";
-    my $tdir = TDIR;
-    my $fullpath= $tdir.'/Resources/langs/ru.strings';
-    #print $fullpath; 
-    my $file = Models::Utilits::File->new();
-    my $xml = $file->getFile($fullpath); 
-
-    #print $xml;
-
-    if($xml)
-    { 
-        my $ref = XMLin($fullpath, forcearray => 1, keyattr => [] );
+    my $ref =  $lang->get();
+  
         print Dumper $ref;
-    }
+    
+
+}
+
+
+sub fCart
+{
+    my $cart = Models::Performers::Cart->new();
+
+    $cart->add(7,6,6);
+    $cart->add(7,5,11);
+    $cart->add(7,8,11);
+    $cart->delete(7,5);
+    my $res = $cart->get(7);
+    print  Dumper $res;
 
 }
 
@@ -110,7 +113,10 @@ sub main
     #addadmin();
     #addbook();
     #getAllbooks();
-    getLang();
+    #getLang();
+    
+    fCart();
+
     my $d=$debug->getMsg();
         print  Dumper(\$d);
 

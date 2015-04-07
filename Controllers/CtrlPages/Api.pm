@@ -13,7 +13,7 @@ my $debug = Models::Utilits::Debug->new();
 use vars qw(%in);
 use Models::Utilits::Email::Valid;
 use CGI qw(:cgi-lib :escapeHTML :unescapeHTML);
-
+use Models::Performers::Cart;
 use Models::Performers::Authors;
 use Models::Performers::Genre;
 
@@ -65,6 +65,13 @@ sub go
     {
         return 1;
     }
+    elsif($data->{'pageparam'} eq 'addcart' )
+    {
+        
+        $self->addCart();
+        return 1;
+    }
+    else{}
     
 
 
@@ -126,6 +133,13 @@ sub addGenre
     return 1;
 }
 
+sub addCart
+{
+    my ($self)=@_;
+    $debug->setMsg('add cart');
 
+
+    #$debug->setMsg($in{'data'});
+}
 
 1;

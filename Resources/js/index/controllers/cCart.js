@@ -23,7 +23,7 @@ App.controller('cCart',function(mCart){
 			
 			mCart.del(index);
 			if(0==mCart.count) {
-				document.location.href = 'index.html#/';
+				document.location.href = '#/';
 			}
 			//console.log(index);
 		}
