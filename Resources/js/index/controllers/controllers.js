@@ -14,16 +14,12 @@ App.service('products', function($http) {
 });
 
 
-App.controller('iControler',function(products, mCart ,$scope ,fLang){
+App.controller('iControler',function(products, mCart ,$scope ,fLang ,$scope){
 	
-	this.meclass='';
-	this.bname='по 4 элемена';
-	
-	
-	this.setClass = function () {
-		if(this.meclass==''){ this.meclass='width20'; this.bname='по 3 элемена';}
-		else {this.meclass=''; this.bname='по 4 элемена';}
-	}
+	 $scope.$on("$destroy", function(){
+			mCart.setSer();
+			
+		});
 	
 	
 	var  temp={value: ''}

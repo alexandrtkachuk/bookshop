@@ -110,17 +110,44 @@ sub delete
         $self->{'sql'}->delete();
 
         $self->{'sql'}->setTable('shop_book2user');
-        $self->{'sql'}->where('idBook',$idbook);
-        $self->{'sql'}->where('idUser',$iduser);
+        $self->{'sql'}->where('idbook',$idbook);
+        $self->{'sql'}->where('iduser',$iduser);
         unless($self->{'sql'}->execute())
         {
-            $debug->setMsg( $self->{'sql'}->getError()); 
+            $debug->setmsg( $self->{'sql'}->geterror()); 
             return 0;
 
         }
 
     }
 
+
+
+    return 1;
+
+}
+
+sub clear
+{
+
+    my ($self,$iduser)=@_;
+
+    #unless($iduser)
+    #{
+    #   return 0;
+    #}
+
+
+    $self->{'sql'}->delete();
+    $self->{'sql'}->setTable('shop_book2user');
+    $self->{'sql'}->where('iduser',$iduser);
+
+    unless($self->{'sql'}->execute())
+    {
+        $debug->setmsg( $self->{'sql'}->geterror()); 
+        return 0;
+
+    }
 
 
     return 1;
@@ -155,11 +182,12 @@ sub upadte
 sub get
 {
     my ($self,$iduser)=@_;
-    my @arr= ( 'count', 'idBook' );
+    my @arr= ( 'count', 'price', 'title', 'id' );
     $self->{'sql'}->select(\@arr);
 
-    $self->{'sql'}->setTable('shop_book2user');
+    $self->{'sql'}->setTable('shop_book2user, shop_books');
     $self->{'sql'}->where('idUser',$iduser);
+    $self->{'sql'}->where('idBook = id');
     unless($self->{'sql'}->execute())
     {
         $debug->setMsg( $self->{'sql'}->getError()); 

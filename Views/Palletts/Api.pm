@@ -20,6 +20,10 @@ use XML::Simple qw(:strict);
 use Models::Utilits::Debug;
 my $debug = Models::Utilits::Debug->new();
 use Data::Dumper;
+
+use Models::Performers::Payment;
+
+
 sub createHash
 {
     
@@ -63,6 +67,15 @@ sub  getOut
     elsif($data->{'pageparam'} eq 'addcart' )
     {
         return $self->addCart();
+    }
+    elsif($data->{'pageparam'} eq 'getcart' )
+    {
+        
+        return $self->getCart();
+    }
+    elsif($data->{'pageparam'} eq 'payment')
+    {
+      return return $self->getPayment();
     }
 
     
@@ -147,6 +160,48 @@ sub getLang
 
 }
 
+
+sub getCart
+{
+    ##nead return name , price and id book
+    my $cart = Models::Performers::Cart->new();
+    my $user= Models::Performers::User->new();
+    my (@ref) = $cart->get();
+    my $res;
+    #my $var = @$ref;
+    if(@ref)
+    { 
+        
+        my %hash =
+        (
+            'user'=>$user->getId(),
+            'cart'=>@ref,
+            'sale'=>$user->getSale()
+        );
+
+        $res= encode_json \%hash;
+    }
+
+    return  decode('utf8',$res);
+
+
+}
+
+
+sub getPayment
+{
+    my $payment=Models::Performers::Payment->new();
+    my $res;
+    my $ref =  $payment->get();
+    if($ref)
+    { 
+        
+        $res= encode_json $ref;
+    }
+
+    return  decode('utf8',$res);
+
+}
 
 sub addCart
 {

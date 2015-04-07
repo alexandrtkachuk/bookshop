@@ -3,12 +3,16 @@ App.config(function($stateProvider, $urlRouterProvider) {
 	  // For any unmatched url, redirect to /state1
 	  //urlRouterProvider.otherwise("/");
 	  $urlRouterProvider.otherwise("/");
+	  
+	
+	  
 	  $urlRouterProvider.when('/cart', [ 'mCart',function (mCart) {
             //console.log(mCart);
-            mCart.getLS();
+            mCart.getSer();
+            
             if(mCart.count==0)
             {
-					return '/'; //кула перенапрвить если корзина пуста
+					return '/'; //куда перенапрвить если корзина пуста
 			}
             
             return false;
@@ -17,7 +21,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
 	
 	$urlRouterProvider.when('/buy', [ 'mCart',function (mCart) {
             //console.log(mCart);
-            mCart.getLS();
+            mCart.getSer();
             if(mCart.count==0)
             {
 					return '/'; //куда перенапрвить если корзина пуста
@@ -50,6 +54,6 @@ App.config(function($stateProvider, $urlRouterProvider) {
 		  controller: "cBuy as cB",
 		  templateUrl: "Resources/html/partials/buy.html"
 		})
-		
+		  
 
   });

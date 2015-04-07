@@ -216,5 +216,71 @@ sub getRole
 
 }
 
+sub getSale
+{
+    my ($self)=@_;
+    my @arr= ( 'sale' );
+    $self->{'sql'}->select(\@arr);
+
+    $self->{'sql'}->setTable('shop_sale2user');
+    $self->{'sql'}->where('idUser', $self->{'id'} );
+    unless($self->{'sql'}->execute())
+    {
+        $debug->setMsg( $self->{'sql'}->getError()); 
+        return 0;
+    }
+
+    unless( $self->{'sql'}->getRows())
+    {
+            return 0; 
+    }
+
+    my $res = $self->{'sql'}->getResult(); 
+   return $res->[0]{'sale'}; 
+
+}
+
+sub setSale
+{
+    my ($self,$sale)=@_;
+    unless($sale)
+    {
+        return 0;
+    }
+    
+    my @arr= ( 'sale' );
+    $self->{'sql'}->select(\@arr);
+
+    $self->{'sql'}->setTable('shop_sale2user');
+    $self->{'sql'}->where('idUser', $self->{'id'} );
+    unless($self->{'sql'}->execute())
+    {
+        $debug->setMsg( $self->{'sql'}->getError()); 
+        return 0;
+    }
+    
+    my %hash=('sale'=>$sale , 'idUser'=> $self->{'id'});
+    
+
+    if( $self->{'sql'}->getRows())
+    {
+        $self->{'sql'}->update(\%hash);
+        $self->{'sql'}->where('idUser', $self->{'id'} );
+
+    }
+    else
+    {
+        $self->{'sql'}->insert(\%hash);
+    }
+
+    unless($self->{'sql'}->execute())
+    {
+        print $self->{'sql'}->getSql();
+        $debug->setMsg( $self->{'sql'}->getError());
+       return 0;
+    }
+    
+    return 1;
+}
 
 1;

@@ -11,6 +11,8 @@ App.factory('mCart', function($http ) {
 	  "add": null,
 	  "del": null,
 	  "setLS": null,
+	  "setSer":null,
+	  "getSer":null,
 	  "getLS": null,
       "user":null
         	  
@@ -24,7 +26,7 @@ App.factory('mCart', function($http ) {
             
      if(!cart.user)
      {
-        alert('Войите в систему');
+        //alert('Войите в систему');
         //return 0;
      } 
 			var obj={
@@ -43,6 +45,7 @@ App.factory('mCart', function($http ) {
 						return;
 					}
 					else {
+						//поменяли только количество элементов
 						entry.count=obj.count;
 						test=false;
 						return;
@@ -68,6 +71,58 @@ App.factory('mCart', function($http ) {
 	  
 	  }
   
+  
+	cart.setSer = function ()
+	{
+			var mass= new Array();
+			
+			
+			this.arr.forEach(function(entry) {
+				//console.log(entry);
+				
+				var temp = {
+					'id':entry.el.id,
+					'count':entry.count
+					}
+					
+				mass.push(temp);
+			});
+			
+			
+		//console.log(mass);	
+         var test = JSON.stringify(mass);
+         console.log(test);	
+        $http.get('api/addcart/?data='+test).success(function (data, status, headers, config) {
+        
+        console.log(data); });
+	}
+	
+	cart.getSer = function ()
+	{
+		$http.get('api/getcart').success(function (data, status, headers, config) {
+				//console.log('me');
+				console.log(data); 
+				
+				this.user = data.user;
+				data.cart.forEach(function(entry) {
+				//console.log(entry);
+				//entry.count;
+					var temp = 
+					{
+						'id':entry.id,
+						'title':entry.title,
+						'price':entry.price
+					};
+				//console.log(temp);
+				cart.add(temp, entry.count); // add to cart in server
+				 
+			});
+				
+			});
+		
+	}
+	
+  
 	cart.del= function (index)
 	{
 			this.arr.splice(index,1);
@@ -77,6 +132,7 @@ App.factory('mCart', function($http ) {
 	
 	cart.setLS = function ()
 	{	//вносим в локал сторе
+		/*
 		var temp={
 			"count":this.count,
 			"arr":this.arr
@@ -85,10 +141,11 @@ App.factory('mCart', function($http ) {
         //$http.get('api/addcart/?data='+test).success(function (data, status, headers, config) {
         
         //console.log(data); });
-        
+        console.log('me');
         
         //console.log(test);
-		window.localStorage.taishop=JSON.stringify(temp);	
+		window.localStorage.taishop=JSON.stringify(temp);
+		 */	
 	}
 	
 	cart.getLS = function () {
@@ -96,7 +153,7 @@ App.factory('mCart', function($http ) {
 		if(this.count>0){return;}
 		
 		//console.log('get');
-		
+		/*
 		if( typeof(window.localStorage.taishop) == "string"){
 			var temp=$.parseJSON('[' + window.localStorage.taishop+ ']');
 			if(typeof(temp[0].count)=="number"){
@@ -112,9 +169,12 @@ App.factory('mCart', function($http ) {
 				
 			}
 			
-		}	
+		}*/
 		
 	} //end get
+	
+	
+	
 	
 	
 	cart.clear= function(){

@@ -143,7 +143,7 @@ sub update
     #my %t=%$hash;
     
 
-    $self->{'sql'}='UPDATE %tabname% SET  ( ';
+    $self->{'sql'}='UPDATE %tabname% SET   ';
     my $left= keys %$hash; 
     foreach my  $k (keys %$hash )
     {
@@ -156,8 +156,7 @@ sub update
         }    
     }
     
-    $self->{'sql'}.=')   ';
-
+    
 
 
     return 1;

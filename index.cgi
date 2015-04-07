@@ -31,7 +31,7 @@ sub main
 
 
     my $date = Models::Utilits::Date->new();
-       
+    my $debug = Models::Utilits::Debug->new();   
 
 
 
@@ -43,7 +43,14 @@ sub main
 
     if($t)
     {
-        $t->go();            
+        eval 
+        { 
+            $t->go();   
+        };
+        if($@) 
+        {  
+            $debug->setMsg($@);
+        }         
     }
     else
     {
@@ -57,7 +64,6 @@ sub main
 
    
     ##debug info
-    my $debug = Models::Utilits::Debug->new();
     my $d=$debug->getMsg();
     #print  Dumper(\$d);
     #print $date->{'nextpage'};

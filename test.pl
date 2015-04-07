@@ -15,7 +15,7 @@ use XML::Simple qw(:strict);
 Config::Config->setDir(TDIR);
 #use XML::Parser;
 #use XML::SAX;
- 
+ use JSON;
 use Models::Performers::Cart;
 use Models::Performers::Book;
 use Models::Utilits::Debug;
@@ -25,6 +25,7 @@ my $debug = Models::Utilits::Debug->new();
 use Models::Utilits::Lang;
 use Models::Utilits::File;
 #use Config::Config;
+use Models::Performers::Payment;
 
 sub addbook
 {
@@ -98,12 +99,41 @@ sub fCart
 {
     my $cart = Models::Performers::Cart->new();
 
-    $cart->add(7,6,6);
-    $cart->add(7,5,11);
-    $cart->add(7,8,11);
-    $cart->delete(7,5);
-    my $res = $cart->get(7);
+    #$cart->add(7,6,6);
+    #$cart->add(7,5,11);
+    #$cart->add(7,8,11);
+    #$cart->delete(7,5);
+    my $res = $cart->get(2);
     print  Dumper $res;
+
+}
+
+sub Sale
+{
+
+    my $admin= Models::Performers::Admin->new();
+    unless($admin->login('sasha@mail.ru','test')) 
+    {
+        return 0;
+    }
+    print $admin->setSale(3);
+
+    print  $admin->getSale();
+}
+
+
+sub payment
+{
+    my $payment=Models::Performers::Payment->new();
+    #print $payment->add('webmoney');
+    #$payment->add('pay2pay');
+    #$payment->add('privat24');
+    my $res = $payment->get();
+    print   Dumper($res);
+
+    $res = $payment->getForId(2);
+    print   Dumper($res);
+
 
 }
 
@@ -115,8 +145,14 @@ sub main
     #getAllbooks();
     #getLang();
     
-    fCart();
-
+    #Sale();
+    #fCart();
+    #my $temp = '[{"id":"3","count":2},{"id":"2","count":1}]'; 
+    #my $res = decode_json $temp;
+    
+    # print $res;
+    #print   Dumper(\$res);
+    payment();
     my $d=$debug->getMsg();
         print  Dumper(\$d);
 

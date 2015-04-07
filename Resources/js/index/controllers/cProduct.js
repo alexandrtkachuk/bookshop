@@ -11,9 +11,13 @@ App.service('getproduct', function($http) {
 });
 
 
-App.controller('cProduct',function(getproduct, $stateParams, mCart){
+App.controller('cProduct',function(getproduct, $stateParams, mCart , $scope){
 	
 	
+	$scope.$on("$destroy", function(){
+			mCart.setSer();
+			
+		});
 	
 	this.value=1;
 	

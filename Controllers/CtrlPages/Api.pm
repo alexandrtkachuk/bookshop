@@ -9,6 +9,7 @@ use Data::Dumper;
 use Models::Utilits::Date;
 use Models::Performers::Admin;
 my $debug = Models::Utilits::Debug->new();
+use JSON;
 
 use vars qw(%in);
 use Models::Utilits::Email::Valid;
@@ -51,6 +52,11 @@ sub go
     {
       return 1; 
     }
+    elsif($data->{'pageparam'} eq 'payment')
+    {
+      return 1; 
+    }
+
     else
     {}
 
@@ -71,6 +77,12 @@ sub go
         $self->addCart();
         return 1;
     }
+    elsif($data->{'pageparam'} eq 'getcart' )
+    {
+        
+        return 1;
+    }
+
     else{}
     
 
@@ -136,10 +148,33 @@ sub addGenre
 sub addCart
 {
     my ($self)=@_;
-    $debug->setMsg('add cart');
+    #$debug->setMsg('add cart');
+    my $user = Models::Performers::User->new();
 
+    my $userid=$user->getId();
 
-    #$debug->setMsg($in{'data'});
+    #$cart->add(7,6,6);
+    unless( $in{'data'})
+    {
+        $data->{'warnings'}=6;
+        return 0;
+    }
+    
+    my $cart = Models::Performers::Cart->new();
+    
+    $cart->clear($userid);
+    my  $arr =  decode_json $in{'data'}; 
+    
+
+    for(@$arr)
+    {
+            $cart->add($userid,$_->{'id'}, $_->{'count'});
+    }
+
+    #$debug->setMsg($arr->[0]{id});
+    $data->{'warnings'}=5;
+    return 1;
+
 }
 
 1;
