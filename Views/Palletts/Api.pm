@@ -13,6 +13,11 @@ require Views::Palletts::Index;
 use Config::Config;
 my $data = Models::Utilits::Date->new();
 use Models::Performers::Book;
+use Models::Performers::User;
+use Models::Utilits::Lang;
+use Models::Utilits::File;
+use XML::Simple qw(:strict);
+
 
 sub createHash
 {
@@ -46,10 +51,19 @@ sub  getOut
         return $self->allbooks();
 
     }
+    elsif($data->{'pageparam'} eq 'user')
+    {
+        return $self->user();
+    }
+    elsif($data->{'pageparam'} eq 'lang')
+    {
+        return $self->getLang();
+    }
+
 
     
 
-    return 'test api';
+    return '';
 
 }
 
@@ -98,5 +112,43 @@ sub allbooks
     return  decode('utf8',$str);
 
 }
+
+sub user
+{
+    my $user= Models::Performers::User->new();
+    my %hash = 
+    (
+        'name'=>$user->getName(),
+        'id' =>$user->getId()
+    );
+    return  encode_json \%hash;
+    #return 'user';
+}
+
+sub getLang
+{
+
+    my $lang = Models::Utilits::Lang->new();
+    my $res;
+    #$res= $lang->get();
+    #print "\n";
+    my $tdir = Config::Config->getDir();;
+    my $fullpath= $tdir.'/Resources/langs/ru.strings';
+    #print $fullpath; 
+    my $file = Models::Utilits::File->new();
+    my $xml = $file->getFile($fullpath); 
+
+    #print $xml;
+
+    if($xml)
+    { 
+        my $ref = XMLin($fullpath, forcearray => 1, keyattr => ['ISTRING'] );
+        $res= encode_json $ref;
+    }
+    return  decode('utf8',$res);
+    
+
+}
+
 
 1;

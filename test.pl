@@ -8,11 +8,23 @@ use File::Basename;
 use constant TDIR=>dirname(__FILE__);
 use lib TDIR;
 use lib TDIR.'/Models/Utilits';
+#use lib TDIR.'/Downloads';
+#use lib TDIR.'/Downloads/XML-SAX-0.99';
+use XML::Simple qw(:strict);
+
+
+#use XML::Parser;
+#use XML::SAX;
+ 
+
 use Models::Performers::Book;
 use Models::Utilits::Debug;
 use Data::Dumper;
 use Models::Performers::Admin;
 my $debug = Models::Utilits::Debug->new();
+use Models::Utilits::Lang;
+use Models::Utilits::File;
+#use Config::Config;
 
 sub addbook
 {
@@ -71,12 +83,34 @@ sub getAllbooks
     print "\n";
 }
 
+sub getLang
+{
+    my $lang = Models::Utilits::Lang->new();
+    print $lang->get();
+    print "\n";
+    my $tdir = TDIR;
+    my $fullpath= $tdir.'/Resources/langs/ru.strings';
+    #print $fullpath; 
+    my $file = Models::Utilits::File->new();
+    my $xml = $file->getFile($fullpath); 
+
+    #print $xml;
+
+    if($xml)
+    { 
+        my $ref = XMLin($fullpath, forcearray => 1, keyattr => [] );
+        print Dumper $ref;
+    }
+
+}
+
 sub main
 {
 
-    addadmin();
+    #addadmin();
     #addbook();
-    getAllbooks();
+    #getAllbooks();
+    getLang();
     my $d=$debug->getMsg();
         print  Dumper(\$d);
 

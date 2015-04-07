@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ISTRINGTABLE ID="joomla" LANG="ru">
+    <ISTRING>
+        <KEY>LANG_exit</KEY>
+        <VALUE>Выход</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_user</KEY>
+        <VALUE>Пользователь</VALUE>
+    </ISTRING>
+</ISTRINGTABLE>

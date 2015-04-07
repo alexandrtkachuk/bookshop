@@ -36,3 +36,11 @@ p.small
 {
 	  font-size: 92%;
 }
+
+
+.username
+{
+	float: right;
+  color: #fff;
+  margin-right: 10px;
+}

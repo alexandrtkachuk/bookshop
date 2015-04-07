@@ -47,13 +47,31 @@ sub go
     {
         return 1;
     }
+    elsif($data->{'pageparam'} eq 'lang')
+    {
+      return 1; 
+    }
+    else
+    {}
 
-    ################FOR ADMIN#################################
+    ################FOR USER#################################
     unless($user->isLogin() )
     {
         $data->{'pageparam'} = undef;
         return 0;
     }
+    
+    if( $data->{'pageparam'} eq 'user') 
+    {
+        return 1;
+    }
+    
+
+
+
+
+
+    ################FOR ADMIN#################################
 
     if( $user->getRole() )
     {
