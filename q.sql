@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS shop_orders ;
 CREATE TABLE shop_orders (id INT NOT NULL AUTO_INCREMENT ,
     idUser INT ,
     idPayment INT ,
-    oderDate DATETIME,  
+    orderDate DATETIME,  
     PRIMARY KEY (id) );
 
 DROP TABLE IF EXISTS shop_sale2user;

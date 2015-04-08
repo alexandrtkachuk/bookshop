@@ -17,7 +17,7 @@ use CGI qw(:cgi-lib :escapeHTML :unescapeHTML);
 use Models::Performers::Cart;
 use Models::Performers::Authors;
 use Models::Performers::Genre;
-
+use Models::Performers::Order;
 ReadParse();
 my $debug = Models::Utilits::Debug->new();
 my $data = Models::Utilits::Date->new();
@@ -84,8 +84,9 @@ sub go
     }
     elsif($data->{'pageparam'} eq 'addorder' )
     {
+        $data->{'pageparam'} = 'warings';
         $self->addOrder();
-
+        
         return 1;
     }
 
@@ -187,6 +188,22 @@ sub addCart
 sub addOrder
 {
 
+    unless($in{'payment'})
+    {
+        $data->{'warnings'}=6;
+        return 0;
+    }
+    my $user = Models::Performers::User->new();
+    my $userid=$user->getId();
+    
+    my $cart = Models::Performers::Cart->new();
+
+    my $res = $cart->get($userid);
+
+    my $order= Models::Performers::Order->new();
+    $order->add($userid,$in{'payment'},$res,$user->getSale() );
+    
+    $debug->setMsg($in{'payment'});
     return 1;
 }
 

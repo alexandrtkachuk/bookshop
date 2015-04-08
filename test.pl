@@ -8,7 +8,7 @@ use File::Basename;
 use constant TDIR=>dirname(__FILE__);
 use lib TDIR;
 use lib TDIR.'/Models/Utilits';
-#use lib TDIR.'/Downloads';
+use lib TDIR.'/download/DateTime/lib'; #
 #use lib TDIR.'/Downloads/XML-SAX-0.99';
 use XML::Simple qw(:strict);
 
@@ -27,7 +27,7 @@ use Models::Utilits::File;
 #use Config::Config;
 use Models::Performers::Payment;
 use Models::Performers::Order;
-
+#use DateTime;
 sub addbook
 {
     my $book =  Models::Performers::Book->new();
@@ -128,7 +128,7 @@ sub payment
     my $payment=Models::Performers::Payment->new();
     #print $payment->add('webmoney');
     #$payment->add('pay2pay');
-    #$payment->add('privat24');
+    # $payment->add('privat24');
     my $res = $payment->get();
     print   Dumper($res);
 
@@ -141,7 +141,12 @@ sub payment
 sub order
 {
     my $order= Models::Performers::Order->new();
-    $order->add(2,1,0);
+    print $order->add(2,1,0);
+    #2015-04-08 05:55:45 
+    #my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime();
+    #$year+=1900;
+    #print "$year-$mon-$mday $hour:$min:$sec\n";
+    #print time();
     
 }
 
@@ -161,6 +166,7 @@ sub main
     # print $res;
     #print   Dumper(\$res);
     #payment();
+    #    order();
     my $d=$debug->getMsg();
         print  Dumper(\$d);
 
