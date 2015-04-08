@@ -74,6 +74,8 @@ App.factory('mCart', function($http ) {
   
 	cart.setSer = function ()
 	{
+		if(this.count<1){return;}
+		
 			var mass= new Array();
 			
 			
@@ -99,6 +101,7 @@ App.factory('mCart', function($http ) {
 	
 	cart.getSer = function ()
 	{
+		if(this.count>0){return;}
 		$http.get('api/getcart').success(function (data, status, headers, config) {
 				//console.log('me');
 				console.log(data); 
@@ -109,7 +112,7 @@ App.factory('mCart', function($http ) {
 				//entry.count;
 					var temp = 
 					{
-						'id':entry.id,
+						'id':(entry.id*1),
 						'title':entry.title,
 						'price':entry.price
 					};

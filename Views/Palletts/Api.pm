@@ -77,6 +77,10 @@ sub  getOut
     {
       return return $self->getPayment();
     }
+    elsif($data->{'pageparam'} eq 'warings')
+    {
+      return return $self->getJSON;
+    }
 
     
 
@@ -109,7 +113,7 @@ sub getJSON
     );
 
     return  encode_json \%hash;
-    return 'test';
+    #return 'test';
 
 }
 

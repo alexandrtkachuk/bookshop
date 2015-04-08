@@ -82,6 +82,13 @@ sub go
         
         return 1;
     }
+    elsif($data->{'pageparam'} eq 'addorder' )
+    {
+        $self->addOrder();
+
+        return 1;
+    }
+
 
     else{}
     
@@ -176,5 +183,12 @@ sub addCart
     return 1;
 
 }
+
+sub addOrder
+{
+
+    return 1;
+}
+
 
 1;

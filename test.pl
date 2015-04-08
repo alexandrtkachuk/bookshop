@@ -26,6 +26,7 @@ use Models::Utilits::Lang;
 use Models::Utilits::File;
 #use Config::Config;
 use Models::Performers::Payment;
+use Models::Performers::Order;
 
 sub addbook
 {
@@ -137,6 +138,13 @@ sub payment
 
 }
 
+sub order
+{
+    my $order= Models::Performers::Order->new();
+    $order->add(2,1,0);
+    
+}
+
 sub main
 {
 
@@ -152,7 +160,7 @@ sub main
     
     # print $res;
     #print   Dumper(\$res);
-    payment();
+    #payment();
     my $d=$debug->getMsg();
         print  Dumper(\$d);
 
