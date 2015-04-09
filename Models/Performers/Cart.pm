@@ -186,7 +186,7 @@ sub get
     $self->{'sql'}->select(\@arr);
 
     $self->{'sql'}->setTable('shop_book2user, shop_books');
-    $self->{'sql'}->where('idUser',$iduser);
+    $self->{'sql'}->where('shop_book2user.idUser',$iduser);
     $self->{'sql'}->where('idBook = id');
     unless($self->{'sql'}->execute())
     {
@@ -194,7 +194,7 @@ sub get
         return 0;
 
     }
-
+    # $debug->setMsg( $self->{'sql'}->getSql());
    unless($self->{'sql'}->getRows())
     {
         #$data->{'warnings'}=3;

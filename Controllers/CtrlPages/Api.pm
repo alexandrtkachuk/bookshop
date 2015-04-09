@@ -56,6 +56,32 @@ sub go
     {
       return 1; 
     }
+    elsif($data->{'pageparam'} eq 'getauthors')
+    {
+      return 1; 
+    }
+    elsif($data->{'pageparam'} eq 'getgenres')
+    {
+      return 1; 
+    }
+    elsif($data->{'pageparam'} eq 'getbookforauthor')
+    {
+        if($in{'num'})
+        {
+            return 1; 
+        }
+    }
+     elsif($data->{'pageparam'} eq 'getbookforgenre')
+    {
+       if($in{'num'})
+        {
+            return 1; 
+        }
+
+    }
+
+
+
 
     else
     {}
@@ -89,8 +115,10 @@ sub go
         
         return 1;
     }
-
-
+    elsif($data->{'pageparam'} eq 'getorders' )
+    {   
+        return 1;
+    }
     else{}
     
 
@@ -160,17 +188,25 @@ sub addCart
     my $user = Models::Performers::User->new();
 
     my $userid=$user->getId();
-
+    
+    
     #$cart->add(7,6,6);
     unless( $in{'data'})
     {
         $data->{'warnings'}=6;
         return 0;
     }
-    
     my $cart = Models::Performers::Cart->new();
     
     $cart->clear($userid);
+
+    if( $in{'data'} == -1)
+    {
+        $debug->setMsg('clear, data='.$in{'data'});
+
+        return 1; # need  coman clear cart   
+    }
+
     my  $arr =  decode_json $in{'data'}; 
     
 
@@ -199,11 +235,24 @@ sub addOrder
     my $cart = Models::Performers::Cart->new();
 
     my $res = $cart->get($userid);
+    
+    unless($res)
+    {
+        return 0; #cart is empry
+    }
 
     my $order= Models::Performers::Order->new();
-    $order->add($userid,$in{'payment'},$res,$user->getSale() );
-    
+    if($order->add($userid,$in{'payment'},$res,$user->getSale() ))
+    {
+        $data->{'warnings'}=5;
+    }
+     
     $debug->setMsg($in{'payment'});
+    
+    #####clear cart #####
+
+    $cart->clear();
+
     return 1;
 }
 

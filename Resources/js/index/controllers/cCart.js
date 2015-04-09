@@ -15,6 +15,18 @@ App.controller('cCart',function(mCart , $scope){
 	   
 	   this.items=mCart.arr;
 		
+		this.totalsale = function()
+		{
+			var total = 0;
+			this.items.forEach(function(item) {
+				total += item.el.price * item.count;
+			})
+			//mCart.setLS();
+			//console.log('cart');
+			total -= total* (mCart.sale/100);
+			
+			return total;	
+		}
 		
 		this.total= function ()
 		{
@@ -23,7 +35,7 @@ App.controller('cCart',function(mCart , $scope){
 				total += item.el.price * item.count;
 			})
 			mCart.setLS();
-			console.log('cart');
+			//console.log('cart');
 			return total;
 		}
 		

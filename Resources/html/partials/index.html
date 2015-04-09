@@ -1,4 +1,13 @@
 <!-- Example row of columns -->
-<div shop-products index="$index" > </div>
-
-
+<div  index="$index" >
+	<div class="row" >
+		<div class="col-md-8" ng-controller="iControler as ic">
+			<h4>Сортировка по авторам:</h4>
+				<button  ng-repeat="item in ic.author.items"  ng-click="ic.getAuthors({{item.id}})"> {{item.name}}</button>
+			<h4>Сортировка по жанрам:</h4>
+			<button  ng-repeat="item in ic.genre.items"   > {{item.name}}</button>
+			
+		</div>
+		<div class="col-md-12" shop-products ></div>
+	</div>
+</div>

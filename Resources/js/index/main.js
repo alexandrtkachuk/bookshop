@@ -14,6 +14,7 @@ App.factory('mCart', function($http ) {
 	  "setSer":null,
 	  "getSer":null,
 	  "getLS": null,
+	  "sale":null,
       "user":null
         	  
   };
@@ -26,8 +27,8 @@ App.factory('mCart', function($http ) {
             
      if(!cart.user)
      {
-        //alert('Войите в систему');
-        //return 0;
+        alert('Войите в систему');
+        return 0;
      } 
 			var obj={
 				'el':el,
@@ -74,7 +75,7 @@ App.factory('mCart', function($http ) {
   
 	cart.setSer = function ()
 	{
-		if(this.count<1){return;}
+		//if(this.count<1){return;}
 		
 			var mass= new Array();
 			
@@ -94,6 +95,8 @@ App.factory('mCart', function($http ) {
 		//console.log(mass);	
          var test = JSON.stringify(mass);
          console.log(test);	
+         if(cart.count==0){test=-1;}
+         
         $http.get('api/addcart/?data='+test).success(function (data, status, headers, config) {
         
         console.log(data); });
@@ -106,18 +109,21 @@ App.factory('mCart', function($http ) {
 				//console.log('me');
 				console.log(data); 
 				
-				this.user = data.user;
+				
+				cart.user = data.user;
+				cart.sale = data.sale; 
+				if(data.cart==0){return;}
 				data.cart.forEach(function(entry) {
 				//console.log(entry);
 				//entry.count;
 					var temp = 
 					{
-						'id':(entry.id*1),
+						'id':entry.id,
 						'title':entry.title,
 						'price':entry.price
 					};
 				//console.log(temp);
-				cart.add(temp, entry.count); // add to cart in server
+				cart.add(temp, (entry.count*1)); // add to cart in server
 				 
 			});
 				
@@ -183,7 +189,7 @@ App.factory('mCart', function($http ) {
 	cart.clear= function(){
 		this.arr= new Array();
 		this.count=0;
-		this.setLS();
+		//this.setLS();
 	}
 	
 	

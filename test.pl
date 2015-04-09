@@ -56,12 +56,6 @@ sub addbook
 }
 
 
-sub getAllBooks
-{
-    # my $book =  Models::Performers::Book->new();
-    #my $res = $book->getAll();
-    
-}
 
 
 sub addadmin
@@ -77,9 +71,9 @@ sub addadmin
 
 sub getAllbooks
 {
-    print "Get all books:\n";
+    print "Get all books Genre:\n";
     my $book =  Models::Performers::Book->new();
-    my $res=$book->getAll();
+    my $res=$book->getForAuthor(3);
     print  Dumper $res;
     #print $res;
     print "\n";
@@ -104,7 +98,7 @@ sub fCart
     #$cart->add(7,5,11);
     #$cart->add(7,8,11);
     #$cart->delete(7,5);
-    my $res = $cart->get(2);
+    my $res = $cart->get(3);
     print  Dumper $res;
 
 }
@@ -141,13 +135,17 @@ sub payment
 sub order
 {
     my $order= Models::Performers::Order->new();
-    print $order->add(2,1,0);
+    #print $order->add(2,1,0);
     #2015-04-08 05:55:45 
     #my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime();
     #$year+=1900;
     #print "$year-$mon-$mday $hour:$min:$sec\n";
     #print time();
-    
+
+
+    my $res = $order->getInfo(3,2);
+    print   Dumper($res);
+
 }
 
 sub main
@@ -155,7 +153,7 @@ sub main
 
     #addadmin();
     #addbook();
-    #getAllbooks();
+    getAllbooks();
     #getLang();
     
     #Sale();

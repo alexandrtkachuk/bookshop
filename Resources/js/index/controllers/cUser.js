@@ -3,9 +3,10 @@ App.controller('cUser',function(mCart, $http ,fLang){
 	this.user;
 	var  temp={value: '',
 		link: '',
-		value2: ''
+		value2: '',
+		orders:null
 		};
-		
+	this.me = mCart;
 	this.text=temp;
 	$http.get('api/user').success(function (data, status, headers, config) {
 			this.user=data;
@@ -16,7 +17,7 @@ App.controller('cUser',function(mCart, $http ,fLang){
 				temp.value=  this.user.name;
 				temp.value2=  '\  Выход';
 				temp.link='logout';
-                mCart.user=true;
+                //mCart.user=true;
 			}
 			else
 			{
@@ -31,7 +32,18 @@ App.controller('cUser',function(mCart, $http ,fLang){
         });	
 	
 	
-		
+	
+	
+	if(mCart.user>0)
+	{
+		$http.get('api/getorders').success(function (data, status, headers, config) {
+			
+			temp.items = data;
+			
+			
+			
+        });	
+	}
 	
 	
 });

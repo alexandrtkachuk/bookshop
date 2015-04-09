@@ -20,8 +20,10 @@ use XML::Simple qw(:strict);
 use Models::Utilits::Debug;
 my $debug = Models::Utilits::Debug->new();
 use Data::Dumper;
-
+use Models::Performers::Order;
 use Models::Performers::Payment;
+use Models::Performers::Authors;
+use Models::Performers::Genre;
 
 
 sub createHash
@@ -81,11 +83,107 @@ sub  getOut
     {
       return return $self->getJSON;
     }
+    elsif($data->{'pageparam'} eq 'getorders' )
+    {   
+        return $self->getOrders();
+    }
+    elsif($data->{'pageparam'} eq 'getauthors')
+    {
+        #   return 1;
+      return $self->getAuthors(); 
+    }
+    elsif($data->{'pageparam'} eq 'getgenres')
+    {
+        return $self->getGenres(); 
+        #return 1; 
+    }
+    elsif($data->{'pageparam'} eq 'getbookforauthor')
+    {
+    return $self->getBookForAuthor();
+      return 1; 
+    }
+     elsif($data->{'pageparam'} eq 'getbookforgenre')
+    {
+      return 1; 
+    }
 
     
 
     return '';
 
+}
+
+
+sub getBookForAuthor
+{
+    my $book =  Models::Performers::Book->new();
+    my $ref=$book->getForAuthor($data->{'numpage'}); 
+    my $res;
+    if($ref)
+    { 
+        
+        $res= encode_json $ref;
+    }
+
+    return  decode('utf8',$res);
+
+    
+}
+
+sub getGenres
+{
+    my $genre = Models::Performers::Genre->new();
+    my $ref = $genre->getAll();
+    my $res;
+    if($ref)
+    { 
+        
+        $res= encode_json $ref;
+    }
+
+    return  decode('utf8',$res);
+
+}
+
+
+sub getAuthors
+{
+    my $author = Models::Performers::Authors->new();
+    my $ref = $author->getAll();
+    my $res;
+    if($ref)
+    { 
+        
+        $res= encode_json $ref;
+    }
+
+    return  decode('utf8',$res);
+
+}
+
+sub getOrders()
+{
+    my $order= Models::Performers::Order->new();
+    my $user= Models::Performers::User->new();
+    my $res;
+    my $ref; 
+    if($data->{'numpage'} )
+    {
+        $ref  =  $order->getInfo( $data->{'numpage'}, $user->getId());
+    }
+    else
+    {
+       $ref  =  $order->get($user->getId());
+    }
+    if($ref)
+    { 
+        
+        $res= encode_json $ref;
+    }
+
+    return  decode('utf8',$res);
+
+    
 }
 
 
@@ -170,7 +268,7 @@ sub getCart
     ##nead return name , price and id book
     my $cart = Models::Performers::Cart->new();
     my $user= Models::Performers::User->new();
-    my (@ref) = $cart->get();
+    my (@ref) = $cart->get( $user->getId());
     my $res;
     #my $var = @$ref;
     if(@ref)

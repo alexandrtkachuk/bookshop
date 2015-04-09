@@ -48,6 +48,8 @@ CREATE TABLE shop_book2genre (idbook INT , idgenre INT);
 DROP TABLE IF EXISTS shop_book2author;
 CREATE TABLE shop_book2author (idbook INT , idauthor INT);
 
+DROP TABLE IF EXISTS shop_order2status;
+CREATE TABLE shop_order2status (idOrder INT , status INT);
 
 
 

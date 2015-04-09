@@ -132,7 +132,7 @@ return $title;
 
 sub getAll
 {
-    my ($self)=@_;
+    my ($self,$forW)=@_;
    
 
     $self->{'sql'}->setTable('shop_book2author , shop_author');
@@ -160,15 +160,21 @@ sub getAll
     
 
     #########
-    $self->{'sql'}->setTable('shop_books');
+    $self->{'sql'}->setTable('shop_books,shop_book2author, shop_book2genre');
     
     $self->{'sql'}->setDISTINCT(1);
 
     my @arr= ( 'shop_books.id','shop_books.title','price', 'info', 'image', 
         $authors , $genres );
     $self->{'sql'}->select(\@arr);
-
     
+
+    if($forW)
+    {
+        $self->{'sql'}->where($forW->{'value'}, $forW->{'var'});
+    }
+
+
     unless($self->{'sql'}->execute())
     {
         $debug->setMsg( $self->{'sql'}->getError()); 
@@ -177,9 +183,47 @@ sub getAll
     
 
     my $res = $self->{'sql'}->getResult(); 
+    #print $self->{'sql'}->getSql();
     return $res;
     #return $self->{'sql'}->getSql();
 }
+
+sub getForGenre
+{
+    my ($self,$idgenre)=@_;
+    unless( $idgenre)
+    {
+        return 0; 
+    }
+    
+    my %hash = 
+    (
+        'value'=> 'shop_book2genre.idBook =id AND idgenre',
+        'var' => $idgenre
+    ); 
+
+    return  $self->getAll(\%hash);
+
+}
+
+sub getForAuthor
+{
+    my ($self,$idauthor)=@_;
+    unless( $idauthor)
+    {
+        return 0; 
+    }
+    
+    my %hash = 
+    (
+        'value'=> 'shop_book2author.idBook =id AND idauthor',
+        'var' => $idauthor
+    ); 
+
+    return  $self->getAll(\%hash);
+
+}
+
 
 sub delete
 {
