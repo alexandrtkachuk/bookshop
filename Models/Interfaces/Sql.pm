@@ -32,6 +32,7 @@ sub new
             'table'=>undef, #имя таблици 
             'where'=>undef,
             'DISTINCT'=>' ',
+            'ORDERBY'=>undef,
             'GROUP_CONCAT'=>undef
         },$class);
 
@@ -62,6 +63,27 @@ sub connect
 
 }
 
+
+sub OrederBy
+{
+   return 0 unless($dbh);
+   my($self,$val , $param) = @_;
+
+   unless($val)
+   {
+        return 0;
+   }
+
+   unless($param)
+   {
+        $param='ASC';
+   }
+
+    $self->{'ORDERBY'}=$val.' '.$param;
+
+    return 1;
+ 
+}
 
 sub where
 {
@@ -310,6 +332,11 @@ sub getSql
     {
         $self->{'sql'}.=' WHERE '.$self->{'where'};
         $self->{'where'}=undef; #clear 
+    }
+
+    if($self->{'ORDERBY'})
+    {
+         $self->{'sql'}.= ' ORDER BY '.$self->{'ORDERBY'};
     }
 
     #print $self->{'sql'};

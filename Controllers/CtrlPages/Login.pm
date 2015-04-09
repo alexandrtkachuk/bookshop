@@ -63,7 +63,8 @@ sub go
             }
             else
             {
-                $data->{'redirect'}=Config::Config->getBaseUrl().'admin';
+                #$data->{'redirect'}=Config::Config->getBaseUrl().'admin';
+                $data->{'redirect'}=Config::Config->getBaseUrl();
             }
         }
 

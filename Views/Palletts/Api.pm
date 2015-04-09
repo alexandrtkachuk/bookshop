@@ -104,6 +104,7 @@ sub  getOut
     }
      elsif($data->{'pageparam'} eq 'getbookforgenre')
     {
+        return $self->getBookForGenre();
       return 1; 
     }
 
@@ -111,6 +112,23 @@ sub  getOut
 
     return '';
 
+}
+
+
+
+sub getBookForGenre
+{
+    my $book =  Models::Performers::Book->new();
+    my $ref=$book->getForGenre($data->{'numpage'}); 
+    my $res;
+    if($ref)
+    { 
+        
+        $res= encode_json $ref;
+    }
+
+    return  decode('utf8',$res);
+    
 }
 
 
@@ -126,9 +144,10 @@ sub getBookForAuthor
     }
 
     return  decode('utf8',$res);
-
     
 }
+
+
 
 sub getGenres
 {

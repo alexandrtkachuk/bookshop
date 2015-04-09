@@ -58,6 +58,12 @@ sub add
 {
     my ($self,$iduser,$idbook,$count)=@_;
     my @arr= ( 'count' );
+
+    if($count<1)
+    {
+        return 0;
+    }
+
     $self->{'sql'}->select(\@arr);
 
     $self->{'sql'}->setTable('shop_book2user');

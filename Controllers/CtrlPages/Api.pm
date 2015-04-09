@@ -235,11 +235,13 @@ sub addOrder
     my $cart = Models::Performers::Cart->new();
 
     my $res = $cart->get($userid);
-    
+    $debug->setMsg('me');
+
     unless($res)
     {
         return 0; #cart is empry
     }
+    $debug->setMsg( 'me2' );
 
     my $order= Models::Performers::Order->new();
     if($order->add($userid,$in{'payment'},$res,$user->getSale() ))

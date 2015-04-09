@@ -1,26 +1,9 @@
-package Controllers::CtrlPages::Admin;
+package Controllers::CtrlPages::Api;
 
 use warnings;
 use strict;
 
 use Config::Config;
-
-use Data::Dumper;
-use Models::Utilits::Date;
-use Models::Performers::Admin;
-my $debug = Models::Utilits::Debug->new();
-
-use vars qw(%in);
-use Models::Utilits::Email::Valid;
-use CGI qw(:cgi-lib :escapeHTML :unescapeHTML);
-
-ReadParse();
-
-
-#module which is responsible for admin page
-#
-my $Data={};
-
 
 sub new
 {
@@ -28,6 +11,8 @@ sub new
     my $class = ref($_[0])||$_[0];
     return bless({      },$class);
 }
+
+
 
 sub go
 {
@@ -47,10 +32,9 @@ sub go
 
     }
         
-   unless($data->{'pageparam'} )
-   { 
-        $data->{'pageparam'}='ListAdmin';
-    }
+    
+    
+    
 
    return 1;
 
@@ -58,13 +42,6 @@ sub go
 
 
 
-sub addauthor
-{
-    
-    return 1;
-
-
-}
 
 
 1;

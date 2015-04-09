@@ -11,7 +11,8 @@ our @ISA = qw(Views::Palletts::Index);
 require Views::Palletts::Index;
 use Config::Config;
 my $data = Models::Utilits::Date->new();
-
+use Models::Performers::Order;
+use CGI;
 sub createHash
 {
     
@@ -21,7 +22,15 @@ sub createHash
     $self->{'baseurl'}=Config::Config->getBaseUrl() ;
     $self->{'getHeader'}=$self->loadTemplate('Header');
     $self->{'getFooter'}=$self->loadTemplate('Footer');
-    $self->{'getContent'}=$self->loadTemplate($data->{'pageparam'});
+    if($data->{'pageparam'} eq 'ListAdmin' ){
+        $self->{'getContent'}=$self->loadTemplate($data->{'pageparam'});
+    }
+    else
+    {
+        
+        my $fun = $data->{'pageparam'};
+        $self->{'getContent'}=$self->$fun();
+            }
     #print $data->{'pageparam'};
 }
 
@@ -44,6 +53,27 @@ sub warings
     return $mess;
 
 }
+
+
+sub listorder
+{
+
+    my $order= Models::Performers::Order->new();
+    
+    my $ref = $order->getAll();
+
+    my $str ='';
+    
+    my $q = CGI->new;   
+    for(@$ref)
+    {
+        #$str.=$q->p($_->{'id'}.'----'.$_->{'payment'}); 
+    } 
+
+    #return 1;
+    return $str;
+}
+
 
 
 1;

@@ -5,7 +5,7 @@
 			<h4>Сортировка по авторам:</h4>
 				<button  ng-repeat="item in ic.author.items"  ng-click="ic.getAuthors({{item.id}})"> {{item.name}}</button>
 			<h4>Сортировка по жанрам:</h4>
-			<button  ng-repeat="item in ic.genre.items"   > {{item.name}}</button>
+			<button  ng-repeat="item in ic.genre.items" ng-click="ic.getGenres({{item.id}})"  > {{item.name}}</button>
 			
 		</div>
 		<div class="col-md-12" shop-products ></div>

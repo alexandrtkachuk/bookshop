@@ -43,7 +43,7 @@ sub add
 {
     my ($self,$iduser,$payment,$refcart, $userSale)=@_;
     
-    unless($iduser &&  $payment && $refcart && $userSale )
+    unless($iduser &&  $payment && $refcart  )
     {
         return 0;
     }
@@ -121,10 +121,8 @@ sub add
 
 }
 
-
 sub get
 {
-    #get short info for orders (id, payment,price, status) 
     my ($self,$iduser)=@_;
     
 
@@ -133,6 +131,17 @@ sub get
     {
         return 0;
     }
+    return $self->getAll($iduser);
+    
+
+
+}
+
+sub getAll
+{
+    #get short info for orders (id, payment,price, status) 
+    my ($self,$iduser)=@_;
+    
 
     #select id , idUser,
     #(select name from shop_payment where idPayment =shop_payment.id ) , 
@@ -159,7 +168,12 @@ sub get
     $self->{'sql'}->select(\@arr);
     $self->{'sql'}->setTable('shop_orders , shop_order2status');
     $self->{'sql'}->where('idOrder = id' );
-    
+    if($iduser)
+    {
+        $self->{'sql'}->where('idUser' , $iduser );
+    }
+
+    $self->{'sql'}->OrederBy('id','DESC'); 
     unless($self->{'sql'}->execute())
     {
         $debug->setMsg( $self->{'sql'}->getError()); 

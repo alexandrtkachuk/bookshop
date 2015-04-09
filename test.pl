@@ -143,7 +143,7 @@ sub order
     #print time();
 
 
-    my $res = $order->getInfo(3,2);
+    my $res = $order->get(2);
     print   Dumper($res);
 
 }
@@ -153,7 +153,7 @@ sub main
 
     #addadmin();
     #addbook();
-    getAllbooks();
+    #getAllbooks();
     #getLang();
     
     #Sale();
@@ -164,7 +164,7 @@ sub main
     # print $res;
     #print   Dumper(\$res);
     #payment();
-    #    order();
+        order();
     my $d=$debug->getMsg();
         print  Dumper(\$d);
 
