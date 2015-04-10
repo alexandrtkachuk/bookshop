@@ -6,8 +6,8 @@
           <p>Цена: <span ng-bind="post.price | currency"></span></p>
           
           <p>
-				<a class="btn btn-default" href="#/product/{{post.id}}" role="button">Подробней &raquo;</a>  
-				<button type="button" class="btn btn-danger" ng-click="ic.buy($index)" >Купить </button>
+				<a class="btn btn-default" href="#/product/{{post.id}}" role="button"  ng-bind="ic.lang.value.LANG_more.VALUE"> </a>  
+				<button type="button" class="btn btn-danger" ng-click="ic.buy($index)"   ng-bind="ic.lang.value.LANG_buy.VALUE" ></button>
 		  </p>
    </div>
           

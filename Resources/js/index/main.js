@@ -105,11 +105,11 @@ App.factory('mCart', function($http ) {
 	cart.getSer = function ()
 	{
 		if(this.count>0){return;}
-		$http.get('api/getcart').success(function (data, status, headers, config) {
+		return $http.get('api/getcart').success(function (data, status, headers, config) {
 				//console.log('me');
 				console.log(data); 
 				
-				
+				if(data.length<2){return ;}
 				cart.user = data.user;
 				cart.sale = data.sale; 
 				if(data.cart==0){return;}

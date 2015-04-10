@@ -8,6 +8,9 @@ my $session =  Models::Utilits::Sessionme->new();
 use Config::Config;
 use XML::Simple qw(:strict);
 use Models::Utilits::File;
+use Models::Utilits::Debug;
+my $debug = Models::Utilits::Debug->new();
+
 my $self;
 
 
@@ -15,13 +18,20 @@ sub new
 {   
 
        my $class = ref($_[0])||$_[0];
-        my $lang='ru';
+        my $lang;
+
+        unless($self )
+        {
+            $lang='ru';
+        }
 
         if($session->getParam('lang'))
         {
            $lang=$session->getParam('lang');
- 
+            
         }
+
+
 
     $self||=bless(
         {   
@@ -43,7 +53,7 @@ sub get
     {
         $self->load();
     }
-
+    #print  $self->{'lang'};
     return $self->{'value'};
 }
 
@@ -57,7 +67,8 @@ sub set
     }
 
     $session->setParam('lang',$value);
-    
+    $self->{'lang'}=$value;
+    $debug->setMsg('session id = '.$session->getId());
     return $value;
 }
 

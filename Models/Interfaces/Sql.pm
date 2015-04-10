@@ -10,7 +10,7 @@ use Models::Validators::Varibles;
 use Models::Utilits::Debug;
 my $debug = Models::Utilits::Debug->new();
 
-my($database, $host,$user, $pass,$dbh,$sth );
+my($database, $host,$user, $pass,$dbh,$sth,$testmode );
 
 #setQuery
 
@@ -24,6 +24,11 @@ sub new
     $host=$_[2];
     $user=$_[3];
     $pass=$_[4];
+    $testmode=$_[5]; 
+    unless( $database && $host && $user && $pass)
+    {
+        return 0;
+    }
 
     my $class = ref($_[0])||$_[0];
     return bless(
@@ -50,6 +55,10 @@ sub getError
 
 sub connect
 {
+    unless($database &&  $host )
+    {
+        return 0;
+    }
 
     my $data_source= "DBI:mysql:database=$database;host=$host";
 
@@ -101,6 +110,10 @@ sub where
     }
 
      
+    unless($val1)
+    {
+        return 0;
+    }
 
     if($self->{'where'})    
     {
@@ -137,7 +150,11 @@ sub select
 {
     return 0 unless($dbh);
     my($self,$arr) = @_;
-    
+   
+   unless($arr)
+   {
+        return 0;
+   } 
     $self->{'sql'}='SELECT  %DISTINCT% '; 
     
     for(@$arr){
@@ -238,6 +255,8 @@ sub insert
 
 sub setTable
 {
+    return 0 unless($dbh);
+
     my($self,$name) = @_;
     unless($name)
     {
@@ -363,6 +382,12 @@ sub execute
     }
     
     return 0 unless($sth);
+    
+    if($testmode)
+    {
+          return 1;
+    }
+
     return $sth->execute();
 }
 

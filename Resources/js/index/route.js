@@ -7,15 +7,21 @@ App.config(function($stateProvider, $urlRouterProvider) {
 	
 	  
 	  $urlRouterProvider.when('/cart', [ 'mCart',function (mCart) {
-            //console.log(mCart);
-            mCart.getSer();
             
+            
+           
+            
+            
+            
+            mCart.getSer();
             if(mCart.count==0)
             {
 					return '/'; //куда перенапрвить если корзина пуста
 			}
             
-            return false;
+            return false; 
+            
+            
 		}]);
 	
 	

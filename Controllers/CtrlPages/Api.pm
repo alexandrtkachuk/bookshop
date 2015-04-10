@@ -10,6 +10,7 @@ use Models::Utilits::Date;
 use Models::Performers::Admin;
 my $debug = Models::Utilits::Debug->new();
 use JSON;
+use Models::Utilits::Lang;
 
 use vars qw(%in);
 use Models::Utilits::Email::Valid;
@@ -51,6 +52,12 @@ sub go
     elsif($data->{'pageparam'} eq 'lang')
     {
       return 1; 
+    }
+    elsif($data->{'pageparam'} eq 'setlang')
+    {
+        $data->{'pageparam'} = 'warings';
+        $self->setLang();
+        return 1;
     }
     elsif($data->{'pageparam'} eq 'payment')
     {
@@ -258,5 +265,20 @@ sub addOrder
     return 1;
 }
 
+
+sub setLang
+{
+    my $lang = Models::Utilits::Lang->new();
+    
+    unless($in{'lang'})
+    {
+        $data->{'warnings'}=6;
+        return 0;
+    }
+    $debug->setMsg('lang = '.$lang->set($in{'lang'}));
+    #$lang->set($in{'lang'});
+    $data->{'warnings'}=5;
+    return 1;
+}
 
 1;

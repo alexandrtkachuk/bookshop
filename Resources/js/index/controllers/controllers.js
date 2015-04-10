@@ -41,8 +41,8 @@ App.controller('iControler',function( fBooks, mCart ,$scope ,fLang ,$scope ,$htt
 	/******************/
 			
 		
-	console.log(fLang.value);
 	
+	this.lang=fLang;
 	
 	this.getAuthors = function(id)
 	{

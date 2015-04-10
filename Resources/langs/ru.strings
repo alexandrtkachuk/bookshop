@@ -8,4 +8,16 @@
         <KEY>LANG_user</KEY>
         <VALUE>Пользователь</VALUE>
     </ISTRING>
+    <ISTRING>
+        <KEY>LANG_buy</KEY>
+        <VALUE>Купить</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_more</KEY>
+        <VALUE>Подробнее</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_home</KEY>
+        <VALUE>Главная</VALUE>
+    </ISTRING>
 </ISTRINGTABLE>
