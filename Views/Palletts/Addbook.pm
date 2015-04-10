@@ -56,49 +56,41 @@ sub warings
         $mess = 'запись успешно добавлена';
     }
 
-
-
     return $mess;
 
 }
 
-
+#return list authors
 sub Authors
 {
-    #return list authors
+    my ($self)=@_;
     my $author = Models::Performers::Authors->new();
     my $res = $author->getAll();
     my $str='';
-
+    my $text=$self->loadTemplate('helper/Option');
+    
     for(@$res )
     {
-        $str.='<option value="'.$_->{'id'}.';" >'.$_->{'name'}.'</option>';
+        $str.=$self->Replace($text,$_);
     } 
-    #print Dumper $res;
-
+    
     return $str;
-
-
 }
-
-
-
+#return list authors
 sub Genres
 {
-    #return list authors
+    my ($self)=@_;
     my $genre = Models::Performers::Genre->new();
     my $res = $genre->getAll();
     my $str='';
+    my $text=$self->loadTemplate('helper/Option');
 
     for(@$res )
     {
-        $str.='<option value="'.$_->{'id'}.';" >'.$_->{'name'}.'</option>';
+        $str.=$self->Replace($text,$_);
     } 
-    #print Dumper $res;
 
     return $str;
-
-
 }
 
 1;

@@ -8,7 +8,7 @@ use lib '../Models/Utilits';
 
 use Config::Config;
 use Models::Interfaces::Sql;
-
+use Test::MockObject;
 
 use Test::More 'no_plan';
 
@@ -48,14 +48,5 @@ is($sql->setTable('shop_books'),1, 'set table');
 is($sql->where('id',3),1,"set WHERE id = '3'");
 is($sql->execute(),1, 'query is create and is prepare  good');
 like($sql->getSql(), 
-    qr/^SELECT *title, id, price *FROM shop_books *WHERE *id = '3' *$/, 
+    qr/^(SELECT *title, id, price *FROM shop_books *WHERE *id = '3') *$/, 
     'true my query');
-#SELECT    title, id, price FROM shop_books
-#print $sql->getSql();
-#print $sql->execute();
-
-#print "\nrows=".$sql->getRows().'!!!\n';
-
-#sleep(10);
-
-

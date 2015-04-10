@@ -148,6 +148,23 @@ sub order
 
 }
 
+sub test
+{
+
+    my($temp,$text) = @_;
+   
+    my $num;
+    
+    
+
+    
+    $temp=~s/(\d+)/(($num = $1 ) && '' )/e;
+    print $num;
+    print $temp."\n";
+    print $text."\n";
+    return "!";
+}
+
 sub main
 {
 
@@ -164,7 +181,17 @@ sub main
     # print $res;
     #print   Dumper(\$res);
     #payment();
-        order();
+    #order();
+   
+my $text = '
+
+    %%start1%% hfghdh  %%?????%% gdfsg
+    %%end1%%
+
+';
+
+$text=~s/%%(\w+)%%/test($1,$text)/ge;
+ print $text."\n";
     my $d=$debug->getMsg();
         print  Dumper(\$d);
 

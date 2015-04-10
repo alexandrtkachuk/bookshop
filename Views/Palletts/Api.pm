@@ -161,7 +161,6 @@ sub getGenres
     }
 
     return  decode('utf8',$res);
-
 }
 
 
@@ -201,28 +200,24 @@ sub getOrders()
     }
 
     return  decode('utf8',$res);
-
-    
 }
 
 
 sub getWarings
 {
-    
     unless($data->{'warnings'})
     {
         return '0';
     }
-
+    
     return $data->{'warnings'};
-
-
 } 
 
 
 sub getJSON
 {
-   my $d=$debug->getMsg();
+    my $d=$debug->getMsg();
+
     my %hash = 
     (
         'warings'=>getWarings(),
@@ -230,8 +225,6 @@ sub getJSON
     );
 
     return  encode_json \%hash;
-    #return 'test';
-
 }
 
 
@@ -239,7 +232,8 @@ sub allbooks
 {
     my $book =  Models::Performers::Book->new();
     my $res=$book->getAll();
-    my $str; 
+    my $str;
+
     if($data->{'numpage'}) 
     {
          $str =  encode_json $$res[ $data->{'numpage'} - 1];
@@ -248,20 +242,21 @@ sub allbooks
     {
          $str =  encode_json $res;
     }
-    return  decode('utf8',$str);
 
+    return  decode('utf8',$str);
 }
 
 sub user
 {
     my $user= Models::Performers::User->new();
+    
     my %hash = 
     (
         'name'=>$user->getName(),
         'id' =>$user->getId()
     );
+
     return  encode_json \%hash;
-    #return 'user';
 }
 
 sub getLang
@@ -271,14 +266,11 @@ sub getLang
     my $res;
     my $ref =  $lang->get();
     if($ref)
-    { 
-        
+    {     
         $res= encode_json $ref;
     }
 
     return  decode('utf8',$res);
-    
-
 }
 
 
@@ -304,8 +296,6 @@ sub getCart
     }
 
     return  decode('utf8',$res);
-
-
 }
 
 
@@ -321,7 +311,6 @@ sub getPayment
     }
 
     return  decode('utf8',$res);
-
 }
 
 sub addCart

@@ -72,6 +72,7 @@ sub go
         else
         {
             $data->{'warnings'}=5;
+            $data->{'redirect'}=Config::Config->getBaseUrl();
         }
 
     } 

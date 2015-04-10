@@ -57,17 +57,31 @@ sub warings
 
 sub listorder
 {
-
+my ($self)=@_;
     my $order= Models::Performers::Order->new();
     
     my $ref = $order->getAll();
 
     my $str ='';
-    
-    my $q = CGI->new;   
+     my $text=$self->loadTemplate('helper/col-md-2'); 
+ 
+        $str.=$self->Replace($text,{'value'=>'№'});
+        $str.=$self->Replace($text,{'value'=>'id User'});
+        $str.=$self->Replace($text,{'value'=>'Система оплаты'});
+        $str.=$self->Replace($text,{'value'=>'Дата заказа'});
+        $str.=$self->Replace($text,{'value'=>'Сумма'});
+        $str.=$self->Replace($text,{'value'=>'Статус'});
+             
+
     for(@$ref)
     {
-        #$str.=$q->p($_->{'id'}.'----'.$_->{'payment'}); 
+        $str.=$self->Replace($text,{'value'=>$_->{'id'} });
+        $str.=$self->Replace($text,{'value'=>$_->{'idUser'}});
+        $str.=$self->Replace($text,{'value'=>$_->{'payment'}});
+        
+        $str.=$self->Replace($text,{'value'=>$_->{'orderDate'}});
+        $str.=$self->Replace($text,{'value'=>$_->{'sum'}});
+        $str.=$self->Replace($text,{'value'=>$_->{'status'}});
     } 
 
     #return 1;
