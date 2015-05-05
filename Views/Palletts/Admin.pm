@@ -13,6 +13,7 @@ use Config::Config;
 my $data = Models::Utilits::Date->new();
 use Models::Performers::Order;
 use CGI;
+my $debug = Models::Utilits::Debug->new();
 sub createHash
 {
     
@@ -30,7 +31,7 @@ sub createHash
         
         my $fun = $data->{'pageparam'};
         $self->{'getContent'}=$self->$fun();
-            }
+    }
     #print $data->{'pageparam'};
 }
 
@@ -57,31 +58,50 @@ sub warings
 
 sub listorder
 {
-my ($self)=@_;
-    my $order= Models::Performers::Order->new();
     
-    my $ref = $order->getAll();
+    my ($self)=@_;
+    my $order= Models::Performers::Order->new();
+    # $debug->setMsg('numpage='.$data->{'numpage'});
+    $debug->setMsg('iduser='.$data->{'iduser'});
+    my $ref = $order->getAll($data->{'iduser'});
 
     my $str ='';
-     my $text=$self->loadTemplate('helper/col-md-2'); 
- 
-        $str.=$self->Replace($text,{'value'=>'№'});
-        $str.=$self->Replace($text,{'value'=>'id User'});
-        $str.=$self->Replace($text,{'value'=>'Система оплаты'});
-        $str.=$self->Replace($text,{'value'=>'Дата заказа'});
-        $str.=$self->Replace($text,{'value'=>'Сумма'});
-        $str.=$self->Replace($text,{'value'=>'Статус'});
-             
-
+        my $text=$self->loadTemplate('helper/col-md-2'); 
+        my $tdE = $self->loadTemplate('helper/tdSendByu');
+        my $tdL = $self->loadTemplate('helper/tdLink');
+        my $tr = $self->loadTemplate('helper/tr');
+        my $td = $self->loadTemplate('helper/td');
+        my $th = $self->loadTemplate('helper/th');
+        my $thead = $self->loadTemplate('helper/thead');
+        
+        my $temp='';
+        $temp.=$self->Replace($th,{'value'=>'№'});
+        $temp.=$self->Replace($th,{'value'=>'id User'});
+        $temp.=$self->Replace($th,{'value'=>'Система оплаты'});
+        $temp.=$self->Replace($th,{'value'=>'Дата заказа'});
+        $temp.=$self->Replace($th,{'value'=>'Сумма'});
+        $temp.=$self->Replace($th,{'value'=>'Статус'});
+        $temp.=$self->Replace($th,{'value'=>'изменить статус'});
+        
+        $str .= $self->Replace($thead,{'value'=>$temp}); 
+        
+        
     for(@$ref)
     {
-        $str.=$self->Replace($text,{'value'=>$_->{'id'} });
-        $str.=$self->Replace($text,{'value'=>$_->{'idUser'}});
-        $str.=$self->Replace($text,{'value'=>$_->{'payment'}});
+        my $temp ='';
+        $temp.=$self->Replace($td,{'value'=>$_->{'id'} });
+        $temp.=$self->Replace($tdL,{'value'=>$_->{'idUser'} ,
+                                    'id'=>$_->{'idUser'}});
+        $temp.=$self->Replace($td,{'value'=>$_->{'payment'}});
         
-        $str.=$self->Replace($text,{'value'=>$_->{'orderDate'}});
-        $str.=$self->Replace($text,{'value'=>$_->{'sum'}});
-        $str.=$self->Replace($text,{'value'=>$_->{'status'}});
+        $temp.=$self->Replace($td,{'value'=>$_->{'orderDate'}});
+        $temp.=$self->Replace($td,{'value'=>sprintf("%.2f", $_->{'sum'})});
+        $temp.=$self->Replace($td,{'value'=>$_->{'status'}});
+        
+        $temp.=$self->Replace($tdE,{'value'=>'Оплаченно',
+                                    'id'=>$_->{'id'},});
+        
+        $str.=$self->Replace($tr,{'value'=>$temp});
     } 
 
     #return 1;

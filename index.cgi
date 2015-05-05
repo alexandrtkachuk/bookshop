@@ -9,7 +9,7 @@ use File::Basename;;
 
 use constant TDIR=>dirname(__FILE__);
 use lib TDIR;
-use lib TDIR.'/Models/Utilits';
+use lib TDIR.'/Libs';
 
 use Models::Utilits::Date;
 use Models::Utilits::Debug;
@@ -52,6 +52,7 @@ sub main
     my $d=$debug->getMsg();
     #print  Dumper(\$d);
     #print $date->{'nextpage'};
+    #print $date->{'pageparam'};
     #print Config::Config->getBaseUrl();
 }
 ###run to main

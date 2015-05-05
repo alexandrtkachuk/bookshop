@@ -99,7 +99,7 @@ sub  getOut
     }
     elsif($data->{'pageparam'} eq 'getbookforauthor')
     {
-    return $self->getBookForAuthor();
+      return $self->getBookForAuthor();
       return 1; 
     }
      elsif($data->{'pageparam'} eq 'getbookforgenre')
@@ -143,8 +143,7 @@ sub getBookForAuthor
         $res= encode_json $ref;
     }
 
-    return  decode('utf8',$res);
-    
+    return  decode('utf8',$res);    
 }
 
 
@@ -163,7 +162,6 @@ sub getGenres
     return  decode('utf8',$res);
 }
 
-
 sub getAuthors
 {
     my $author = Models::Performers::Authors->new();
@@ -176,10 +174,9 @@ sub getAuthors
     }
 
     return  decode('utf8',$res);
-
 }
 
-sub getOrders()
+sub getOrders
 {
     my $order= Models::Performers::Order->new();
     my $user= Models::Performers::User->new();
@@ -194,8 +191,7 @@ sub getOrders()
        $ref  =  $order->get($user->getId());
     }
     if($ref)
-    { 
-        
+    {         
         $res= encode_json $ref;
     }
 

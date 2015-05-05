@@ -36,8 +36,6 @@ sub new
 
 }
 
-
-
 sub add
 {
 
@@ -128,7 +126,6 @@ $debug->setMsg( $hash2{'idauthor'} );
 return $title;
 
 }
-
 
 sub getAll
 {
@@ -224,6 +221,27 @@ sub getForAuthor
 
 }
 
+sub editPrice
+{
+    my ($self,$idBook,$price)=@_;
+    
+    unless($idBook && $price)
+    {
+        return 0; 
+    }
+    
+    $self->{'sql'}->update({'price'=>$price});
+    $self->{'sql'}->setTable('shop_books');
+    $self->{'sql'}->where('id',$idBook);
+    
+    unless($self->{'sql'}->execute())
+    {
+        $debug->setMsg( $self->{'sql'}->getError()); 
+        return 0;
+    }
+    
+    return 1;
+}
 
 sub delete
 {

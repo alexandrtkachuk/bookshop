@@ -133,8 +133,6 @@ sub get
     }
     return $self->getAll($iduser);
     
-
-
 }
 
 sub getAll
@@ -197,7 +195,8 @@ sub getAll
 
 sub setSatus
 {
-
+        my ($self,$idorder)=@_;
+        return 1;
 }
 
 

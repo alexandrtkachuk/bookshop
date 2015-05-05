@@ -8,8 +8,8 @@ use strict;
 sub isNumeric
 {
     my($self,$temp) = @_;
-    #($temp~=/([0-9])/) || (print 'test');  
-     unless($temp =~ /^\d+$/)
+    
+     unless($temp =~ /^[+-]?\d+$/)
      {
         return 0;
      }
@@ -18,6 +18,17 @@ sub isNumeric
 
 }
 
+
+sub isNumeric2
+{
+    my($self,$temp) = @_;
+    unless($temp =~ /^[+-]?\d+\.?\d+$/)
+    {
+        return 0;
+    }
+
+     return 1;
+}
 
 
 

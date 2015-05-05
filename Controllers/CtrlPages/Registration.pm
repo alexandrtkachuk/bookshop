@@ -11,7 +11,7 @@ use Models::Performers::User;
 my $debug = Models::Utilits::Debug->new();
 
 use vars qw(%in);
-use Models::Utilits::Email::Valid;
+use Email::Valid;
 use CGI qw(:cgi-lib :escapeHTML :unescapeHTML);
 
 ReadParse();

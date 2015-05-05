@@ -14,8 +14,6 @@ my($database, $host,$user, $pass,$dbh,$sth,$testmode );
 
 #setQuery
 
-
-
 #конструктор
 sub new
 {
@@ -175,7 +173,7 @@ sub select
 sub update
 {
    return 0 unless($dbh);
-    my($self,$hash) = @_;
+   my($self,$hash) = @_;
     
 
     #print Dumper $hash;
@@ -196,8 +194,6 @@ sub update
     }
     
     
-
-
     return 1;
 }
 

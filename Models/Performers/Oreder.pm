@@ -38,12 +38,10 @@ sub new
 
 }
 
-
 sub add
 {
     my ($self,$iduser,$payment,$refcart)=@_;
 
-    
     my %hash=('idUser'=>$iduser,
         'idPayment'=>$payment
     );
@@ -58,8 +56,6 @@ sub add
     }
 
     return 1;
-
 }
-
 
 1;

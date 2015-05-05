@@ -11,13 +11,15 @@ use Models::Performers::Admin;
 my $debug = Models::Utilits::Debug->new();
 use JSON;
 use Models::Utilits::Lang;
-
+use Models::Validators::Varibles;
 use vars qw(%in);
-use Models::Utilits::Email::Valid;
+use Email::Valid;
 use CGI qw(:cgi-lib :escapeHTML :unescapeHTML);
 use Models::Performers::Cart;
 use Models::Performers::Authors;
 use Models::Performers::Genre;
+use Models::Performers::Order;
+use Models::Performers::Book;
 use Models::Performers::Order;
 ReadParse();
 my $debug = Models::Utilits::Debug->new();
@@ -126,11 +128,11 @@ sub go
     
 
     ################FOR ADMIN#################################
-
-    if( $user->getRole() )
+    
+    if(0)
     {
-        $data->{'pageparam'} = undef;
-        return 0;
+        #$data->{'pageparam'} = undef;
+        #return 0;
     }   
 
 
@@ -143,8 +145,16 @@ sub go
     {
         $self->addGenre($in{'name'});
     }
-
-
+    elsif($data->{'pageparam'} eq 'editprice')
+    {
+        $self->editPrice($in{'idbook'},$in{'price'});
+        $data->{'pageparam'} = 'warings';
+    }
+    elsif($data->{'pageparam'} eq 'setstatus')
+    {
+        $self->setStatus($in{'id'});
+        $data->{'pageparam'} = 'warings';
+    }
     ##$data->{'pageparam'}
 
     return 0;
@@ -152,6 +162,56 @@ sub go
 }
 
 
+sub setStatus
+{
+    my ($self,$id)=@_;
+    
+    unless($id)
+    {
+        $data->{'warnings'}=6;
+        return 0;
+    }
+    
+    $debug->setMsg('id='.$id); 
+    my $order= Models::Performers::Order->new();
+    unless($order->setSatus($id))
+    {
+        $data->{'warnings'}=4;
+        return 0;
+    }
+    
+    return 1;
+    
+}
+
+sub editPrice
+{
+    
+   my ($self,$idBook,$price)=@_;
+   
+   $debug->setMsg('idbook='.$idBook);
+   $debug->setMsg('price='.$price);
+   unless(Models::Validators::Varibles->isNumeric2($price))
+   {
+        $data->{'warnings'}=3;
+        return 0;
+   }
+   
+   if($price<1)
+   {
+        $data->{'warnings'}=2;
+        return 0;
+   }
+   
+   my $book =  Models::Performers::Book->new();
+   unless($book->editPrice($idBook,$price))
+   {
+        $data->{'warnings'}=2;
+        return 0;
+   }
+    
+    return 1;
+}
 
 sub addAuthor
 {

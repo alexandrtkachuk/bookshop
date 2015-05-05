@@ -71,6 +71,7 @@ sub add
     if($self->{'sql'}->getRows())
     {
         $data->{'warnings'}=3;
+         $debug->setMsg( 'warings 3'); 
         return 0; #record exists 
     }
 
