@@ -153,7 +153,7 @@ sub getAll
     $self->{'sql'}->select(\@pay);
     my $qPay = $self->{'sql'}->getSql();
 
-    my @sum = ('sum(price)');
+    my @sum = ('sum(price * count)');
     $self->{'sql'}->setTable('shop_order2book');
     $self->{'sql'}->where('idOrder = id');
     $self->{'sql'}->select(\@sum);
@@ -196,6 +196,15 @@ sub getAll
 sub setSatus
 {
         my ($self,$idorder)=@_;
+        $self->{'sql'}->setTable('shop_order2status');
+        $self->{'sql'}->update({'status'=>1});
+        $self->{'sql'}->where('idOrder',$idorder);
+        unless($self->{'sql'}->execute())
+        {
+            $debug->setMsg( $self->{'sql'}->getError()); 
+            return 0;
+        }    
+        
         return 1;
 }
 
@@ -210,7 +219,9 @@ sub getInfo
     {
         return 0;
     }
-    my @arr = ('shop_order2book.price, title', 'shop_books.id' );
+    my @arr = ('(shop_order2book.price * shop_order2book.count) as price
+               , title', 'shop_books.id' ,
+               'shop_order2book.count');
     $self->{'sql'}->setTable('shop_order2book,shop_orders, shop_books ');
     $self->{'sql'}->where('idOrder',$idorder);
     $self->{'sql'}->where(' shop_orders.id = idOrder ');

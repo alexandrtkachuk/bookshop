@@ -1,19 +1,26 @@
 <div>
 	<h2>{{cC.name}}</h2>
 	
-	<ol>
-		<li ng-repeat="item in cC.items" >	
-			<span ng-bind="item.el.title"></span>
-			<b ng-bind="item.el.price"></b>
-			<input type="number" value="{{item.count}}" ng-model="item.count" min="1"  class="input-mini" required>
-		{{item.count}}<br />
-			<span >{{item.el.price * item.count}}</span>
-			<button ng-click="cC.remove($index)">delit</button>
-		</li>
-	</ol>
+	<table class="table">
+		<thead>
+			<th ng-bind="cC.lang.value.LANG_nametover.VALUE"></th>
+			<th ng-bind="cC.lang.value.LANG_priceone.VALUE"></th>
+			<th ng-bind="cC.lang.value.LANG_count.VALUE"></th>
+			<th ng-bind="cC.lang.value.LANG_countprice.VALUE"></th>
+		</thead>
+		<tr ng-repeat="item in cC.items" >	
+			<td ng-bind="item.el.title"></td>
+			<td ng-bind="item.el.price"></td>
+			<td>
+				<input type="number" value="{{item.count}}" ng-model="item.count" min="1"  class="input-mini" required>
+			</td>
+			<td >{{item.el.price * item.count}}</td>
+			<td><button ng-click="cC.remove($index)"   ng-bind="'x'"></button></td>
+		</tr>
+	</table> 
 	
 	<p> total:{{cC.total()}}   </p>
 	<p> Со скидкой:{{cC.totalsale()}}   </p>
 	<hr />
-	<a ui-sref="buy">Оформить заказ</a>
+	<a ui-sref="buy" class="btn btn-default" >Оформить заказ</a>
 </div>

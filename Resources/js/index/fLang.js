@@ -8,16 +8,15 @@ App.factory('fLang', function($http) {
   //this.temp=lang;
   
  
-  
-  $http.get('api/lang').success(
+  if (lang.value==0){
+	$http.get('api/lang').success(
 				function(data, status, headers, config) {
-
 					console.log(data);
 					lang.value = data.ISTRING;
 					console.log(lang.value);
 				}
 			);	
-  
+  }
 	
 	 lang.get = function() {
 		$http.get('api/lang').success(

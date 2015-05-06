@@ -155,12 +155,44 @@ sub go
         $self->setStatus($in{'id'});
         $data->{'pageparam'} = 'warings';
     }
+    elsif($data->{'pageparam'} eq 'setsale')
+    {
+        $self->setSale($in{'id'},$in{'sale'});
+        $data->{'pageparam'} = 'warings';
+    }
     ##$data->{'pageparam'}
 
     return 0;
 
 }
 
+sub setSale
+{
+    my ($self,$id,$sale)=@_;
+    
+    unless($id && $sale)
+    {
+        $data->{'warnings'}=6;
+        return 0;
+    }
+    
+   unless(Models::Validators::Varibles->isNumeric($sale)
+          && $sale>=0 && $sale<100)
+   {
+        $data->{'warnings'}=4;
+        return 0;
+   }
+    $debug->setMsg('id='.$id);
+    
+    my $user =  Models::Performers::User->new();
+    unless($user->setSale($id,$sale))
+    {
+        $data->{'warnings'}=4;
+        return 0;
+    }
+    
+    return 1;
+}
 
 sub setStatus
 {

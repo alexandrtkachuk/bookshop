@@ -1,13 +1,25 @@
 <div>
 		<p>Скидка:<b ng-bind="cU.me.sale"></b>%</p>
 		<h3>Заказы</h3>
-		<div class="row"   ng-repeat="item in cU.text.items">
-			<div class="col-md-2" ng-bind="item.id" >	</div>
-			<div class="col-md-2" ng-bind="item.payment" >	</div>
-			<div class="col-md-2" ng-bind="item.sum | currency" >	</div>
-			<div class="col-md-2" ng-bind="item.orderDate" >	</div>
-			<div class="col-md-2" ng-bind="item.status" >	</div>
-			<div class="col-md-2"><a href="#/order/{{item.id}}">info</a></div>
+		
+		<table class="table">
+		<thead>
+			<th >#</th>
+			<th ng-bind="cU.lang.value.LANG_payment.VALUE"></th>
+			<th ng-bind="cU.lang.value.LANG_price.VALUE"></th>
+			<th ng-bind="cU.lang.value.LANG_date.VALUE"></th>
+			<th ng-bind="cU.lang.value.LANG_status.VALUE"></th>
+			<th ng-bind="cU.lang.value.LANG_info.VALUE"></th>
+		</thead>
+		<tr   ng-repeat="item in cU.text.items">
+			<td ng-bind="item.id" >	</td>
+			<td ng-bind="item.payment" >	</td>
+			<td ng-bind="item.sum | currency" >	</td>
+			<td ng-bind="item.orderDate" >	</td>
 			
-		</div>
+			<td  ng-bind="cU.test(item.status)">	</td>
+			<td><a href="#/order/{{item.id}}"  class="btn btn-default" ng-bind="cU.lang.value.LANG_info.VALUE"></a></td>
+			
+		</tr>
+		</table>
 </div>

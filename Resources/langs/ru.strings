@@ -20,4 +20,48 @@
         <KEY>LANG_home</KEY>
         <VALUE>Главная</VALUE>
     </ISTRING>
+    <ISTRING>
+        <KEY>LANG_nametover</KEY>
+        <VALUE>наименование</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_priceone</KEY>
+        <VALUE>цена за еденицу</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_count</KEY>
+        <VALUE>количество</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_countprice</KEY>
+        <VALUE>цена за указаное количество</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_payment</KEY>
+        <VALUE>система оплаты</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_price</KEY>
+        <VALUE>цена</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_date</KEY>
+        <VALUE>дата</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_status</KEY>
+        <VALUE>Статус</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_info</KEY>
+        <VALUE>Подробно</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_sendmoney</KEY>
+        <VALUE>оплаченно</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_nosendmoney</KEY>
+        <VALUE>не оплаченно</VALUE>
+    </ISTRING>
 </ISTRINGTABLE>

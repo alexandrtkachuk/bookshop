@@ -25,13 +25,15 @@ my $self;
 
 sub new
 {   
-
+    #my $self;
+    
     my $sql =  Models::Interfaces::Sql->new(
         Config::Config::DBUSER,
         Config::Config::DBHOST,
         Config::Config::DBNAME,
         Config::Config::DBPASS);
     $self || $sql->connect();
+    
     my $class = ref($_[0])||$_[0];
 
     $self||=bless(
@@ -176,6 +178,7 @@ sub isLogin
 
 sub logout
 {
+    my ($self)=@_;
     $self->{'email'} = undef;
     $self->{'id'} = undef;
     $self->{'name'} = undef;
@@ -243,7 +246,7 @@ sub getSale
 
 sub setSale
 {
-    my ($self,$sale)=@_;
+    my ($self,$id,$sale)=@_;
     unless($sale)
     {
         return 0;
@@ -253,21 +256,20 @@ sub setSale
     $self->{'sql'}->select(\@arr);
 
     $self->{'sql'}->setTable('shop_sale2user');
-    $self->{'sql'}->where('idUser', $self->{'id'} );
+    $self->{'sql'}->where('idUser', $id );
     unless($self->{'sql'}->execute())
     {
         $debug->setMsg( $self->{'sql'}->getError()); 
         return 0;
     }
     
-    my %hash=('sale'=>$sale , 'idUser'=> $self->{'id'});
+    my %hash=('sale'=>$sale , 'idUser'=> $id);
     
 
     if( $self->{'sql'}->getRows())
     {
         $self->{'sql'}->update(\%hash);
-        $self->{'sql'}->where('idUser', $self->{'id'} );
-
+        $self->{'sql'}->where('idUser', $id );
     }
     else
     {

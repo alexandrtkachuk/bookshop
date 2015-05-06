@@ -1,7 +1,16 @@
 <div>
-		
-		<div class="row"   ng-repeat="item in cO.temp.items">
-			<div class="col-md-2" > <a href="#/product/{{item.id}}"> <span ng-bind="item.title" ></span></a>	</div>
-			<div class="col-md-2" ng-bind="item.price | currency" >	</div>
-		</div>
+		<table class="table">
+		<thead>
+			
+			<th ng-bind="cO.lang.value.LANG_nametover.VALUE"></th>
+			
+			<th ng-bind="cO.lang.value.LANG_count.VALUE"></th>
+			<th ng-bind="cO.lang.value.LANG_price.VALUE"></th>
+		</thead>
+		<tr   ng-repeat="item in cO.temp.items">
+			<td  > <a href="#/product/{{item.id}}"> <span ng-bind="item.title" ></span></a>	</td>
+			<td  ng-bind="item.count" >	</td>
+			<td  ng-bind="item.price | currency" >	</td>
+		</tr>
+		</table>
 </div>

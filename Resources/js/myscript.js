@@ -114,7 +114,7 @@ function sendNewPrice()
 
 function SendBuy(idOrder)
 {
-    //console.log(setstatus); setstatus
+    console.log(idOrder); //setstatus
     $.post(
             "api/setstatus",
             {
@@ -123,13 +123,14 @@ function SendBuy(idOrder)
             function (data)
             {
                 //if(data)
-                console.log(data );
+                console.log(data);
                 var t = $.parseJSON(data);
                 
                 //console.log(t.warings);
                 if(t.warings==0)
                 {
                     alert('статут успешно изменен');
+                    location.reload();
                 }
                 else
                 {
@@ -141,3 +142,41 @@ function SendBuy(idOrder)
     );
 }
 
+function editSale(id,sale)
+{
+    $('#sale').val(sale);
+    $('#idUser').val(id);
+    //console.log(id);
+}
+
+function SendSale(idOrder)
+{
+    var idUser = $('#idUser').val();
+    var newSale = $('#sale').val(); 
+    $.post(
+            "api/setsale",
+            {
+                id:idUser,
+                sale:newSale
+            },
+            function (data)
+            {
+                //if(data)
+                console.log(data);
+                var t = $.parseJSON(data);
+                
+                //console.log(t.warings);
+                if(t.warings==0)
+                {
+                    alert('скидка успешно изменена');
+                    location.reload();
+                }
+                else
+                {
+                    alert('Error№'+t.warings);
+
+                }
+
+            }
+    );
+}

@@ -1,7 +1,7 @@
-App.controller('cCart',function(mCart , $scope){
+App.controller('cCart',function(mCart ,fLang, $scope){
 		
 		mCart.getSer();
-		
+		this.lang = fLang;
 		$scope.$on("$destroy", function(){
 			//console.log('!exit!');
 			mCart.setSer();

@@ -20,4 +20,48 @@
         <KEY>LANG_home</KEY>
         <VALUE>Home</VALUE>
     </ISTRING>
+    <ISTRING>
+        <KEY>LANG_nametover</KEY>
+        <VALUE>name</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_priceone</KEY>
+        <VALUE>one price</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_count</KEY>
+        <VALUE>count</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_countprice</KEY>
+        <VALUE>count price</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_payment</KEY>
+        <VALUE>payment</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_price</KEY>
+        <VALUE>price</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_date</KEY>
+        <VALUE>date</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_status</KEY>
+        <VALUE>status</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_info</KEY>
+        <VALUE>info</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_sendmoney</KEY>
+        <VALUE>send money</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_nosendmoney</KEY>
+        <VALUE>no send money</VALUE>
+    </ISTRING>
 </ISTRINGTABLE>

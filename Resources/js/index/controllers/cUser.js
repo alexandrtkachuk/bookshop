@@ -1,5 +1,5 @@
 App.controller('cUser',function(mCart, $http ,fLang){
-	
+	this.lang =fLang;
 	this.user;
 	var  temp={value: '',
 		link: '',
@@ -8,6 +8,20 @@ App.controller('cUser',function(mCart, $http ,fLang){
 		};
 	this.me = mCart;
 	this.text=temp;
+	
+	this.test = function(val)
+	{
+		console.log('val='+val);
+		if (val==0)
+		{
+			return this.lang.value.LANG_nosendmoney.VALUE;
+		}
+		else
+		{
+			return this.lang.value.LANG_sendmoney.VALUE;
+		}
+		
+	}
 	$http.get('api/user').success(function (data, status, headers, config) {
 			this.user=data;
 			
@@ -22,7 +36,7 @@ App.controller('cUser',function(mCart, $http ,fLang){
 			else
 			{
 					//temp.value='<a href="login">Вход</a>';
-					temp.value2=  'Вход';
+				temp.value2=  'Вход';
 				temp.link='login';
 			}
 			

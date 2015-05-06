@@ -5,7 +5,7 @@ use strict;
 $|=1;
 
 use Data::Dumper;
-use File::Basename;;
+use File::Basename;
 
 use constant TDIR=>dirname(__FILE__);
 use lib TDIR;
@@ -45,8 +45,17 @@ sub main
         $date->{'nextpage'}='Error';
     }
 
-    my $view = Views::View->new();
-    $view->go(TDIR.'/');
+   
+    eval 
+    {
+        my $view = Views::View->new();
+        $view->go(TDIR.'/');         
+    };
+    if($@) 
+    {  
+        $debug->setMsg($@);
+    }      
+    
     
     ##debug info
     my $d=$debug->getMsg();

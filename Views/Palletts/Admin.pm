@@ -65,7 +65,7 @@ sub listorder
     $debug->setMsg('iduser='.$data->{'iduser'});
     my $ref = $order->getAll($data->{'iduser'});
 
-    my $str ='';
+        my $str ='';
         my $text=$self->loadTemplate('helper/col-md-2'); 
         my $tdE = $self->loadTemplate('helper/tdSendByu');
         my $tdL = $self->loadTemplate('helper/tdLink');
@@ -96,10 +96,20 @@ sub listorder
         
         $temp.=$self->Replace($td,{'value'=>$_->{'orderDate'}});
         $temp.=$self->Replace($td,{'value'=>sprintf("%.2f", $_->{'sum'})});
-        $temp.=$self->Replace($td,{'value'=>$_->{'status'}});
-        
-        $temp.=$self->Replace($tdE,{'value'=>'Оплаченно',
+       
+       
+       if ($_->{'status'}) {
+             $temp.=$self->Replace($td,{'value'=>'Оплаченно'});
+            $temp.=$self->Replace($td,{'value'=>'Оплаченно'});
+       }
+       else
+       {
+            $temp.=$self->Replace($td,{'value'=>'не оплаченно'});
+            $temp.=$self->Replace($tdE,{'value'=>'Оплаченно',
                                     'id'=>$_->{'id'},});
+       }
+       
+        
         
         $str.=$self->Replace($tr,{'value'=>$temp});
     } 

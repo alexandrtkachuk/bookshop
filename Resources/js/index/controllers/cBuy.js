@@ -35,7 +35,10 @@ App.controller('cBuy',function(mCart , $http){
 					if(data.warings == 5) {
 						//console.log('good');
 						mCart.clear();
+                        
 						this.sps='Спасибо! В скором врмени мы с Вами свяжемся';
+                        alert('Спасибо! В скором врмени мы с Вами свяжемся');
+                        location.reload();
 					}
 					
 				});	
