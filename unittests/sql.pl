@@ -7,6 +7,8 @@ use File::Basename;
 use constant TDIR=>dirname(__FILE__);
 use lib  '../Libs';
 use lib  '../';
+use lib TDIR.'/../Libs';
+use lib TDIR.'/../';
 use base qw(Test::Class);
 use Test::MockObject;
 use Test::More 'no_plan';

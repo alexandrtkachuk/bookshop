@@ -4,11 +4,11 @@ use warnings;
 use strict;
 
 
-
 use Models::Utilits::Debug;
 use Data::Dumper;
 use Models::Utilits::Date;
 use Models::Interfaces::Sql;
+use Config::Config;
 
 my $self;
 my $debug = Models::Utilits::Debug->new();
@@ -88,9 +88,7 @@ sub add
 
 sub getAll
 {
-
     my ($self)=@_;
-
     my @arr= ( 'name' , 'id' );
     $self->{'sql'}->setTable('shop_author');
     $self->{'sql'}->select(\@arr);
@@ -101,10 +99,6 @@ sub getAll
     }
 
     return $self->{'sql'}->getResult();
-    
-
-
-
 }
 
 sub getId

@@ -8,7 +8,7 @@ use Config::Config;
 use Data::Dumper;
 use Models::Utilits::Date;
 use Models::Performers::Admin;
-my $debug = Models::Utilits::Debug->new();
+use Models::Utilits::Debug;
 use JSON;
 use Models::Utilits::Lang;
 use Models::Validators::Varibles;
@@ -22,9 +22,9 @@ use Models::Performers::Order;
 use Models::Performers::Book;
 use Models::Performers::Order;
 ReadParse();
-my $debug = Models::Utilits::Debug->new();
+
 my $data = Models::Utilits::Date->new();
-    
+my $debug = Models::Utilits::Debug->new();    
     
 sub new
 {
@@ -175,7 +175,13 @@ sub setSale
         $data->{'warnings'}=6;
         return 0;
     }
-    
+    unless(Models::Validators::Varibles->isNumeric($id)
+          && $id>0 )
+   {
+        $data->{'warnings'}=4;
+        return 0;
+   }
+
    unless(Models::Validators::Varibles->isNumeric($sale)
           && $sale>=0 && $sale<100)
    {
